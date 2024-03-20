@@ -1,16 +1,50 @@
 ---
+import Layout from '../layouts/Layout.astro';
+import type { CartItemDisplayInfo } from '../stores/app-store';
+import AddToCartForm from '../components/AddToCartFrom.svelte';
+import FigurineDescription from '../components/FigurineDescription.astro';
 
+
+const item: CartItemDisplayInfo = {
+	id: 'astronaut-figurine',
+	name: 'Astronaut Figurine',
+	imageSrc: '/images/astronaut-figurine.png',
+};
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title={item.name}>
+	<main>
+		<div class="product-layout">
+			<div>
+				<FigurineDescription />
+				<AddToCartForm item={item} client:load>
+					<button type="submit">Add to cart</button>
+				</AddToCartForm>
+			</div>
+			<img src={item.imageSrc} alt={item.name} />
+		</div>
+	</main>
+</Layout>
+
+<style>
+	main {
+		margin: auto;
+		padding: 1em;
+		max-width: var(--content-max-width);
+	}
+
+	.product-layout {
+		display: grid;
+		gap: 2rem;
+		grid-template-columns: repeat(auto-fit, minmax(20rem, max-content));
+	}
+
+	.product-layout img {
+		width: 100%;
+		max-width: 26rem;
+	}
+
+	button[type='submit'] {
+		margin-block-start: 1rem;
+	}
+</style>

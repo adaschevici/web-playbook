@@ -1,5 +1,5 @@
 <script>
-    import { isCartOpen } from '../cartStore';
+    import { isCartOpen } from '../stores/app-store';
 </script>
 
 <!--use "$" to read the store value-->
