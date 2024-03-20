@@ -1,5 +1,5 @@
 <script>
-  let name = "Astro + Svelte";
+  let name: String = "Astro + Svelte";
 </script>
 
 
