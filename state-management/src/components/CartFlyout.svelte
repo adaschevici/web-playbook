@@ -4,11 +4,12 @@
 
 {#if $isCartOpen}
   {#if Object.values($cartItems).length}
-    <aside class="container">
+    <p>{$isCartOpen}</p>
+    <aside hidden={!$isCartOpen} class="container">
       <ul class="list">
         {#each Object.values($cartItems) as cartItem}
         <li class="listItem">
-          <img src={cartItem.imageSrc} alt={cartItem.name} />
+          <img src={cartItem.imageSrc} alt={cartItem.name} class="listItemImg" />
           <h3>{cartItem.name}</h3>
           <p>Quantity: {cartItem.quantity}</p>
         </li>
@@ -28,7 +29,7 @@
     height: 100vh;
     background: var(--color-bg-2);
     padding-inline: 2rem;
-    min-width: min(90vw, 300px);
+    min-width: min(50vw, 300px);
     border-left: 3px solid var(--color-bg-3);
   }
 

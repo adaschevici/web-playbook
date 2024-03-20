@@ -13,7 +13,7 @@
     }
   
     function addToCart() {
-      isCartOpen.set(true);
+      // isCartOpen.set(true);
       addCartItem(hardcodedItemInfo);
     }
   </script>
