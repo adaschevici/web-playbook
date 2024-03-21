@@ -19,21 +19,20 @@
   let posts: Post[] = [];
   let searchQuery: string = "";
   let fuse: Fuse<Post>;
+  let searchInput: HTMLInputElement;
 
   onMount(() => {
     fuse = new Fuse(searchIndex, options);
+    if (searchInput) searchInput.focus();
   });
 
-  $: if(fuse) {
-    const results = fuse.search(searchQuery).map((result) => result.item).slice(0, 5);
+  $: if (fuse && searchQuery.length > 2) {
+    const results = fuse
+      .search(searchQuery)
+      .slice(0, 5)
+      .map((result) => result.item);
     posts = results;
   }
-
-  function handleOnSearch(event: Event) {
-    const target = event.target as HTMLInputElement;
-    searchQuery = target.value;
-  }
-
 </script>
 
 <label for="searchInput">Search</label>
@@ -41,8 +40,9 @@
   id="searchInput"
   type="text"
   bind:value={searchQuery}
-  on:change={handleOnSearch}
+  on:input={() => {}}
   placeholder="Search posts"
+  bind:this={searchInput}
 />
 {#if searchQuery.length > 1}
   <p>
@@ -62,3 +62,21 @@
     <li>No results found</li>
   {/if}
 </ul>
+
+<style>
+  /* Basic styles for improved appearance */
+  .search-input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 20px;
+    font-size: 1rem;
+  }
+  .search-results {
+    list-style: none;
+    padding: 0;
+  }
+  .search-results li a {
+    color: blue; /* Placeholder styling; adjust as needed */
+    text-decoration: none;
+  }
+</style>
