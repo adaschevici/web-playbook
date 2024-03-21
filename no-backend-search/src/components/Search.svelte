@@ -26,12 +26,16 @@
     if (searchInput) searchInput.focus();
   });
 
-  $: if (fuse && searchQuery.length > 2) {
+  $: if (fuse && searchQuery.length > 1) {
     const results = fuse
       .search(searchQuery)
       .slice(0, 5)
       .map((result) => result.item);
     posts = results;
+  }
+
+  $: if (searchQuery.length === 0) {
+    posts = [];
   }
 </script>
 
