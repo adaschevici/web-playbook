@@ -1,5 +1,6 @@
 <script lang="ts">
   import Fuse from "fuse.js";
+  import { onMount } from "svelte";
 
   interface Post {
     frontmatter: {
@@ -14,29 +15,32 @@
     minMatchCharLength: 3,
     threshold: 0.5,
   };
-  let searchIndex: string[];
-  let searchQuery: string = "";
+  export let searchIndex: Post[];
   let posts: Post[] = [];
+  let searchQuery: string = "";
+  let fuse: Fuse<Post>;
 
-  function Search(searchIndex: string[]) {
-    const fuse = new Fuse(searchIndex, options);
-    const query: string = "";
-    const posts = fuse
-      .search(searchQuery)
-      .map((result) => result.item)
-      .slice(0, 5);
+  onMount(() => {
+    fuse = new Fuse(searchIndex, options);
+  });
+
+  $: if(fuse) {
+    const results = fuse.search(searchQuery).map((result) => result.item).slice(0, 5);
+    posts = results;
   }
 
   function handleOnSearch(event: Event) {
-    const value = event.target?.value;
-    searchQuery = value;
+    const target = event.target as HTMLInputElement;
+    searchQuery = target.value;
   }
+
 </script>
 
 <label for="searchInput">Search</label>
 <input
+  id="searchInput"
   type="text"
-  value={searchQuery}
+  bind:value={searchQuery}
   on:change={handleOnSearch}
   placeholder="Search posts"
 />
@@ -47,7 +51,7 @@
   </p>
 {/if}
 <ul>
-  {#if posts.length === 0}
+  {#if posts.length > 0}
     {#each posts as post}
       <li>
         <a href={`/${post.frontmatter.slug}`}>{post.frontmatter.title}</a>

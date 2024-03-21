@@ -1,7 +1,7 @@
 ---
-import Search from './Search';
+import Search from './Search.svelte';
 const allPosts = await Astro.glob('../posts/*.{md,mdx}');
 const posts = allPosts.filter((post) => !post.frontmatter.draft && post.frontmatter.slug);
 ---
 
-<Search client:load searchList={posts} />
+<Search client:load searchIndex={posts} />
