@@ -1,14 +1,8 @@
 <script lang="ts">
   import Fuse from "fuse.js";
   import { onMount } from "svelte";
+  import type { Post } from "../types/interface";
 
-  interface Post {
-    frontmatter: {
-      title: string;
-      description: string;
-      slug: string;
-    };
-  }
   const options = {
     keys: ["frontmatter.title", "frontmatter.description", "frontmatter.slug"],
     includeMatches: true,
