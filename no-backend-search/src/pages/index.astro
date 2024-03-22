@@ -5,15 +5,17 @@ import ThemeSwitcher from "../components/ThemeSwitcher.astro";
 ---
 
 <Layout title="MyBlog">
-  <div class="py-10 lg:py-16">
-    <h1
-      class="text-5xl lg:text-9xl font-bold bg-clip-text text-transparent bg-gradient-to-tr from-blue-500 to-green-500 text-center ubuntu-mono-regular"
-    >
-      Lense
-    </h1>
-  </div>
-  <div class="max-w-3xl mx-auto">
-    <SearchBar />
+  <div class="flex flex-col justify-center align-middle h-[50vh]">
+    <div class="py-5 lg:py-2">
+      <h1
+        class="text-5xl lg:text-9xl font-bold bg-clip-text text-transparent bg-gradient-to-tr from-blue-500 to-orange-500 text-center ubuntu-mono-regular"
+      >
+        Lense
+      </h1>
+    </div>
+    <div class="mx-auto w-[85vw] md:w-[50vw] lg:w-[35vw]">
+      <SearchBar />
+    </div>
   </div>
 </Layout>
 
