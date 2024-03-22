@@ -1,4 +1,4 @@
-<div class="theme-switch-wrapper">
+<!-- <div class="theme-switch-wrapper">
     <label class="theme-switch" for="checkbox">
       <input type="checkbox" id="checkbox" />
       <div class="slider">
@@ -42,89 +42,76 @@
         </svg>
       </div>
     </label>
-  </div>
+  </div> -->
+<div class="theme-switch-wrapper md:flex md:items-center">
+  <label
+    data-testid="theme-switch"
+    class="theme-switch relative inline-block h-[34px] w-[60px]"
+    for="checkbox"
+  >
+    <input type="checkbox" id="checkbox" class="hidden" />
+    <div
+      class="slider absolute bottom-0 left-0 right-0 top-0 cursor-pointer rounded-full bg-black before:absolute before:bottom-[4px] before:left-[4px] before:h-[26px] before:w-[26px] before:rounded-full before:bg-orange before:transition-[0.4s] dark:bg-white"
+    >
+      <div class="flex">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="2em"
+        height="2em"
+        viewBox="0 0 32 32"
+      >
+        <path
+          fill="currentColor"
+          d="M16 12.005a4 4 0 1 1-4 4a4.005 4.005 0 0 1 4-4m0-2a6 6 0 1 0 6 6a6 6 0 0 0-6-6M5.394 6.813L6.81 5.399l3.505 3.506L8.9 10.319zM2 15.005h5v2H2zm3.394 10.193L8.9 21.692l1.414 1.414l-3.505 3.506zM15 25.005h2v5h-2zm6.687-1.9l1.414-1.414l3.506 3.506l-1.414 1.414zm3.313-8.1h5v2h-5zm-3.313-6.101l3.506-3.506l1.414 1.414l-3.506 3.506zM15 2.005h2v5h-2z"
+        ></path>
+      </svg>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="2em"
+        height="2em"
+        viewBox="0 0 24 24"
+        >
+            <g fill="none" fill-rule="evenodd">
+                <path fill="black" d="M24 0v24H0V0zM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427c-.002-.01-.009-.017-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093c.012.004.023 0 .029-.008l.004-.014l-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014l-.034.614c0 .012.007.02.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z">
+                </path>
+                <path fill="white dark:orange" d="M13.574 3.137a1.01 1.01 0 0 0-1.097 1.409a6 6 0 0 1-7.931 7.931a1.01 1.01 0 0 0-1.409 1.097A9 9 0 0 0 21 12c0-4.434-3.206-8.118-7.426-8.863m1.307 2.481A7.002 7.002 0 0 1 12 19a7.002 7.002 0 0 1-6.382-4.12a8 8 0 0 0 9.263-9.263Z">
+                </path>
+            </g>
+        </svg>
+</div>
+    </div>
+  </label>
 
+  <style>
+    input:checked + .slider:before {
+      transform: translateX(26px);
+    }
+  </style>
 
-<style>
-  .theme-switch-wrapper {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-  }
+  <script>
+    document.addEventListener("DOMContentLoaded", function ready() {
+      const button = document.querySelector(
+        '.theme-switch input[type="checkbox"]'
+      ) as HTMLInputElement;
 
-  .theme-switch {
-    display: inline-block;
-    height: 34px;
-    position: relative;
-    width: 60px;
-  }
+      const switchTheme = () => {
+        document.documentElement.classList.toggle("dark");
+        if (document.documentElement.classList.contains("dark")) {
+          localStorage.setItem("theme", "dark");
+        }
+      };
 
-  .theme-switch input {
-    display: none;
-  }
+      if (
+        localStorage.theme === "dark" ||
+        (!("theme" in localStorage) &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches)
+      ) {
+        switchTheme();
+      }
 
-  .slider {
-    background-color: var(--slider-bg);
-    bottom: 0;
-    cursor: pointer;
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
-    transition: 0.4s;
-    border-radius: 34px;
-  }
-
-  .slider:before {
-    background-color: var(--slider-bg-before);
-    bottom: 4px;
-    content: "";
-    height: 26px;
-    left: 4px;
-    position: absolute;
-    transition: 0.4s;
-    width: 26px;
-    border-radius: 50%;
-  }
-
-  input:checked + .slider {
-    background-color: var(--slider-input-bg);
-  }
-
-  input:checked + .slider:before {
-    transform: translateX(26px);
-  }
-
-  .slider svg {
-    color: #222;
-    position: absolute;
-    transition:
-      opacity 0.2s ease 0s,
-      transform 0.35s ease 0s;
-    pointer-events: none;
-  }
-
-  .feather-moon {
-    opacity: 0;
-    left: 9px;
-    bottom: 9px;
-    transform: translateX(4px);
-  }
-
-  .feather-sun {
-    opacity: 1;
-    right: 10px;
-    bottom: 9px;
-    transform: translateX(0px);
-  }
-
-  input:checked + .slider .feather-moon {
-    opacity: 1;
-    transform: translateX(0);
-  }
-
-  input:checked + .slider .feather-sun {
-    opacity: 0;
-    transform: translateX(-4px);
-  }
-</style>
+      button.addEventListener("click", () => {
+        switchTheme();
+      });
+    });
+  </script>
+</div>
