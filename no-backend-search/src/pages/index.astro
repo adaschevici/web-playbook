@@ -7,7 +7,7 @@ import ThemeSwitcher from "../components/ThemeSwitcher.astro";
 <Layout title="MyBlog">
   <div class="py-10 lg:py-16">
     <h1
-      class="text-5xl lg:text-9xl font-bold bg-clip-text text-transparent bg-gradient-to-tr from-blue-500 to-green-500 text-center euphoria-script-regular"
+      class="text-5xl lg:text-9xl font-bold bg-clip-text text-transparent bg-gradient-to-tr from-blue-500 to-green-500 text-center ubuntu-mono-regular"
     >
       Lense
     </h1>
@@ -18,10 +18,29 @@ import ThemeSwitcher from "../components/ThemeSwitcher.astro";
 </Layout>
 
 <style>
-  @import url("https://fonts.googleapis.com/css2?family=Euphoria+Script&display=swap");
-  .euphoria-script-regular {
-    font-family: "Euphoria Script", cursive;
+  @import url('https://fonts.googleapis.com/css2?family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+  .ubuntu-mono-regular {
+    font-family: "Ubuntu Mono", monospace;
     font-weight: 400;
     font-style: normal;
+  }
+
+  .ubuntu-mono-bold {
+    font-family: "Ubuntu Mono", monospace;
+    font-weight: 700;
+    font-style: normal;
+  }
+
+  .ubuntu-mono-regular-italic {
+    font-family: "Ubuntu Mono", monospace;
+    font-weight: 400;
+    font-style: italic;
+  }
+
+  .ubuntu-mono-bold-italic {
+    font-family: "Ubuntu Mono", monospace;
+    font-weight: 700;
+    font-style: italic;
   }
 </style>
