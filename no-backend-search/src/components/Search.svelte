@@ -62,10 +62,8 @@
     </div>
     <input
       class="block w-full p-4 pl-10 text-sm
-       text-green-300 
-       dark:text-red-900
        border border-gray-300
-       rounded-lg bg-gray-50
+       rounded-full bg-gray-50
 
        focus:outline-none
        focus:ring-blue-500
@@ -88,7 +86,10 @@
     {#if posts.length > 0}
       {#each posts as post}
         <li>
-          <a class="text-lg text-blue-700 hover:text-blue-900 hover:underline underline-offset-2" href={`/${post.frontmatter.slug}`}>{post.frontmatter.title}</a>
+          <a
+            class="text-lg text-blue-700 hover:text-blue-900 hover:underline underline-offset-2"
+            href={`/${post.frontmatter.slug}`}>{post.frontmatter.title}</a
+          >
           <p class="text-gray-500">{post.frontmatter.description}</p>
         </li>
       {/each}
@@ -100,12 +101,6 @@
 
 <style>
   /* Basic styles for improved appearance */
-  .search-input {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 20px;
-    font-size: 1rem;
-  }
   .search-results {
     list-style: none;
     padding: 0;
