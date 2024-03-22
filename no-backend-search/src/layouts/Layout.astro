@@ -1,4 +1,6 @@
 ---
+import ThemeSwitcher from '../components/ThemeSwitcher.astro';
+
 interface Props {
 	title: string;
 }
@@ -7,7 +9,7 @@ const { title } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="description" content="Astro description" />
@@ -17,7 +19,9 @@ const { title } = Astro.props;
 		<title>{title}</title>
 	</head>
 	<body>
+		<ThemeSwitcher />	
 		<slot />
+
 	</body>
 </html>
 <style is:global>
