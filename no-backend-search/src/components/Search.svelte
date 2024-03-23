@@ -50,7 +50,7 @@
         height={24}
         viewBox="0 0 24 24"
         stroke-width="2"
-        stroke="currentColor"
+        stroke="lightgray"
         fill="none"
         stroke-linecap="round"
         stroke-linejoin="round"
@@ -64,6 +64,7 @@
       class="block w-full p-4 pl-10 text-sm
        border border-gray-300
        rounded-full bg-gray-50
+       dark:bg-[#202124]
 
        focus:outline-none
        focus:ring-blue-500
