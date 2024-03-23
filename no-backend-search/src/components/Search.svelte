@@ -37,8 +37,9 @@
   <label
     for="searchInput"
     class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
-    >Search</label
   >
+    Search
+  </label>
   <div class="relative">
     <div
       class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
@@ -76,6 +77,22 @@
       placeholder="Search for anything..."
       bind:this={searchInput}
     />
+    <button
+      class="absolute inset-y-0 right-0 flex items-center pr-5 pointer-events-none"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="icon icon-tabler icon-tabler-search stroke-slate-600 dark:stroke-slate-100"
+        width={24}
+        height={24}
+        viewBox="0 0 24 24"
+      >
+        <path
+          fill="currentColor"
+          d="M22 18.605a.75.75 0 0 1-.75.75h-5.1a2.93 2.93 0 0 1-5.66 0H2.75a.75.75 0 1 1 0-1.5h7.74a2.93 2.93 0 0 1 5.66 0h5.1a.75.75 0 0 1 .75.75m0-13.21a.75.75 0 0 1-.75.75H18.8a2.93 2.93 0 0 1-5.66 0H2.75a.75.75 0 1 1 0-1.5h10.39a2.93 2.93 0 0 1 5.66 0h2.45a.74.74 0 0 1 .75.75m0 6.6a.74.74 0 0 1-.75.75H9.55a2.93 2.93 0 0 1-5.66 0H2.75a.75.75 0 1 1 0-1.5h1.14a2.93 2.93 0 0 1 5.66 0h11.7a.75.75 0 0 1 .75.75"
+        />
+      </svg>
+    </button>
   </div>
   {#if searchQuery.length > 1}
     <p>
