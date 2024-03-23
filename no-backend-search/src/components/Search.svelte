@@ -45,12 +45,11 @@
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        class="icon icon-tabler icon-tabler-search"
+        class="icon icon-tabler icon-tabler-search stroke-slate-600 dark:stroke-slate-100"
         width={24}
         height={24}
         viewBox="0 0 24 24"
         stroke-width="2"
-        stroke="lightgray"
         fill="none"
         stroke-linecap="round"
         stroke-linejoin="round"
@@ -62,9 +61,10 @@
     </div>
     <input
       class="block w-full p-4 pl-10 text-sm
-       border border-gray-300
+       color-slate-900 dark:text-slate-100
+       border border-gray-600 dark:border-gray-300
        rounded-full bg-gray-50
-       dark:bg-[#202124]
+       dark:bg-finder-grey
 
        focus:outline-none
        focus:ring-blue-500
