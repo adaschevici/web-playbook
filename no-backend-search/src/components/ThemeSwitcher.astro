@@ -74,20 +74,33 @@ const toggleTheme = () => {
 			'.theme-switch input[type="checkbox"]'
 		) as HTMLInputElement;
 
+		const currentTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : null;
+
+    if (currentTheme) {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add(currentTheme);
+    }
+
+		const setTheme = (theme) => {
+      localStorage.setItem('theme', theme);
+      document.documentElement.classList.add(theme);
+    };
+
 		const switchTheme = () => {
-			document.documentElement.classList.toggle('dark');
-			if (document.documentElement.classList.contains('dark')) {
-				localStorage.setItem('theme', 'dark');
+			if (localStorage.theme === 'dark') {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+		  } else {
+        document.documentElement.classList.add('dark');
+			  localStorage.setItem('theme', 'dark');
 			}
 		};
 
-		if (
-			localStorage.theme === 'dark' ||
-			(!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
-		) {
-			switchTheme();
-		}
+		if ( localStorage.theme ) {
+		     console.log('theme is set');
+			   setTheme(localStorage.theme);
 
+		}
 		button.addEventListener('click', () => {
 			switchTheme();
 		});
