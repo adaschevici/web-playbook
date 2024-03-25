@@ -2,6 +2,7 @@
   import Fuse from "fuse.js";
   import { onMount } from "svelte";
   import type { Post } from "../types/interface";
+  import AutoComplete from "simple-svelte-autocomplete";
 
   const options = {
     keys: ["frontmatter.title", "frontmatter.description", "frontmatter.slug"],
@@ -14,21 +15,39 @@
   let searchQuery: string = "";
   let fuse: Fuse<Post>;
   let searchInput: HTMLInputElement;
+  let selectedItem: HTMLInputElement;
+
+  const getSuggestions = async (searchTerm: string) => {
+    if (searchTerm.length < 2) {
+      return [];
+    }
+    const results = fuse
+      .search(searchTerm)
+      .slice(0, 5)
+      .map((result) => {
+        return {
+          label: result.item.frontmatter.title,
+          value: result.item.frontmatter.title,
+        };
+      });
+    return results;
+  };
 
   onMount(() => {
     fuse = new Fuse(searchIndex, options);
     if (searchInput) searchInput.focus();
   });
 
-  $: if (fuse && searchQuery.length > 1) {
+  $: if (fuse && searchQuery?.length > 1) {
     const results = fuse
       .search(searchQuery)
       .slice(0, 5)
       .map((result) => result.item);
+    console.log(results);
     posts = results;
   }
 
-  $: if (searchQuery.length === 0) {
+  $: if (searchQuery?.length === 0) {
     posts = [];
   }
 </script>
@@ -60,7 +79,8 @@
         <line x1={21} y1={21} x2={15} y2={15}></line>
       </svg>
     </div>
-    <input
+    <AutoComplete
+      showClear={false}
       class="block w-full p-4 pl-10 text-sm
        color-slate-900 dark:text-slate-100
        border border-gray-600 dark:border-gray-300
@@ -70,13 +90,28 @@
        focus:outline-none
        focus:ring-blue-500
        focus:border-blue-500"
-      id="searchInput"
-      type="text"
-      bind:value={searchQuery}
-      on:input={() => {}}
-      placeholder="Search for anything..."
-      bind:this={searchInput}
-    />
+      searchFunction={getSuggestions}
+      delay={500}
+      localFiltering={false}
+      showLoadingIndicator={true}
+      labelFieldName="value"
+      valueFieldName="value"
+      bind:selectedItem
+      placeholder="Searh Git..."
+      hideArrow={true}
+      create={true}
+      onChange={(item) => {
+        selectedItem = item;
+        console.log("Item selected", item);
+      }}
+      onCreate={(item) => {
+        console.log("Item created", item);
+      }}
+      minCharactersToSearch={0}
+      ><div slot="item" let:item class="suggestion-item">
+        <div class="trim">{@html item.label}</div>
+      </div>
+    </AutoComplete>
     <button
       class="absolute inset-y-0 right-0 flex items-center pr-5 pointer-events-auto"
       on:click={() => console.log("Filter button clicked")}
@@ -95,7 +130,7 @@
       </svg>
     </button>
   </div>
-  {#if searchQuery.length > 1}
+  {#if searchQuery?.length > 1}
     <p>
       Found {posts.length}
       {posts.length === 1 ? "result" : "results"} for '{searchQuery}'

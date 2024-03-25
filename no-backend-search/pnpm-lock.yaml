@@ -36,6 +36,11 @@ dependencies:
     specifier: ^5.4.3
     version: 5.4.3
 
+devDependencies:
+  simple-svelte-autocomplete:
+    specifier: ^2.5.2
+    version: 2.5.2
+
 packages:
 
   /@alloc/quick-lru@5.2.0:
@@ -4132,6 +4137,10 @@ packages:
       simple-concat: 1.0.1
     dev: false
     optional: true
+
+  /simple-svelte-autocomplete@2.5.2:
+    resolution: {integrity: sha512-6+kZP3XQGb7zs0djTWoFv8tQorBZdv64YfCKrlsYIYBCFsEeikSiNsBSSYw1Om+LYmFeMEOAYSSKoEw+qpnBXQ==}
+    dev: true
 
   /simple-swizzle@0.2.2:
     resolution: {integrity: sha512-JA//kQgZtbuY83m+xT+tXJkmJncGMTFT+C+g2h2R9uxkYIrE2yy9sgmcLhCnw57/WSD+Eh3J97FPEDFnbXnDUg==}
