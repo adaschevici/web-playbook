@@ -2,7 +2,6 @@
   import Fuse from "fuse.js";
   import { onMount } from "svelte";
   import type { Post } from "../types/interface";
-  import AutoComplete from "simple-svelte-autocomplete";
 
   const options = {
     keys: ["frontmatter.title", "frontmatter.description", "frontmatter.slug"],
@@ -15,39 +14,41 @@
   let searchQuery: string = "";
   let fuse: Fuse<Post>;
   let searchInput: HTMLInputElement;
-  let selectedItem: HTMLInputElement;
+  let filteredSuggestions: string[] = [];
 
-  const getSuggestions = async (searchTerm: string) => {
-    if (searchTerm.length < 2) {
-      return [];
+  function updateSuggestions(searchQuery: string) {
+    if (searchQuery.length > 1) {
+      filteredSuggestions = searchIndex
+        .filter((post) => {
+          return post.frontmatter.title
+            .toLowerCase()
+            .includes(searchQuery.toLowerCase());
+        })
+        .map((post) => post.frontmatter.title);
+    } else {
+      filteredSuggestions = [];
     }
-    const results = fuse
-      .search(searchTerm)
-      .slice(0, 5)
-      .map((result) => {
-        return {
-          label: result.item.frontmatter.title,
-          value: result.item.frontmatter.title,
-        };
-      });
-    return results;
-  };
+  }
+
+  function selectSuggestion(suggestion: string) {
+    searchQuery = suggestion;
+    filteredSuggestions = [];
+  }
 
   onMount(() => {
     fuse = new Fuse(searchIndex, options);
     if (searchInput) searchInput.focus();
   });
 
-  $: if (fuse && searchQuery?.length > 1) {
+  $: if (fuse && searchQuery.length > 1) {
     const results = fuse
       .search(searchQuery)
       .slice(0, 5)
       .map((result) => result.item);
-    console.log(results);
     posts = results;
   }
 
-  $: if (searchQuery?.length === 0) {
+  $: if (searchQuery.length === 0) {
     posts = [];
   }
 </script>
@@ -59,78 +60,75 @@
   >
     Search
   </label>
-  <div class="relative">
-    <div
-      class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="icon icon-tabler icon-tabler-search stroke-slate-600 dark:stroke-slate-100"
-        width={24}
-        height={24}
-        viewBox="0 0 24 24"
-        stroke-width="2"
-        fill="none"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+  <div class="autocomplete-container">
+    <div class="relative">
+      <div
+        class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
       >
-        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-        <circle cx={10} cy={10} r={7}></circle>
-        <line x1={21} y1={21} x2={15} y2={15}></line>
-      </svg>
-    </div>
-    <AutoComplete
-      showClear={false}
-      class="block w-full p-4 pl-10 text-sm
-       color-slate-900 dark:text-slate-100
-       border border-gray-600 dark:border-gray-300
-       rounded-full bg-gray-50
-       dark:bg-finder-grey
-
-       focus:outline-none
-       focus:ring-blue-500
-       focus:border-blue-500"
-      searchFunction={getSuggestions}
-      delay={500}
-      localFiltering={false}
-      showLoadingIndicator={true}
-      labelFieldName="value"
-      valueFieldName="value"
-      bind:selectedItem
-      placeholder="Searh Git..."
-      hideArrow={true}
-      create={true}
-      onChange={(item) => {
-        selectedItem = item;
-        console.log("Item selected", item);
-      }}
-      onCreate={(item) => {
-        console.log("Item created", item);
-      }}
-      minCharactersToSearch={0}
-      ><div slot="item" let:item class="suggestion-item">
-        <div class="trim">{@html item.label}</div>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="icon icon-tabler icon-tabler-search stroke-slate-600 dark:stroke-slate-100"
+          width={24}
+          height={24}
+          viewBox="0 0 24 24"
+          stroke-width="2"
+          fill="none"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+          <circle cx={10} cy={10} r={7}></circle>
+          <line x1={21} y1={21} x2={15} y2={15}></line>
+        </svg>
       </div>
-    </AutoComplete>
-    <button
-      class="absolute inset-y-0 right-0 flex items-center pr-5 pointer-events-auto"
-      on:click={() => console.log("Filter button clicked")}
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="icon icon-tabler icon-tabler-search stroke-slate-600 dark:stroke-slate-100"
-        width={24}
-        height={24}
-        viewBox="0 0 24 24"
+      <input
+        class="block w-full p-4 pl-10 text-sm
+         color-slate-900 dark:text-slate-100
+         border border-gray-600 dark:border-gray-300
+         rounded-full bg-gray-50
+         dark:bg-finder-grey
+
+         focus:outline-none
+         focus:ring-blue-500
+         focus:border-blue-500"
+        id="searchInput"
+        type="text"
+        bind:value={searchQuery}
+        on:input={() => updateSuggestions(searchQuery)}
+        placeholder="Search for anything..."
+        bind:this={searchInput}
+      />
+      <button
+        class="absolute inset-y-0 right-0 flex items-center pr-5 pointer-events-auto"
+        on:click={() => console.log("Filter button clicked")}
       >
-        <path
-          fill="currentColor"
-          d="M22 18.605a.75.75 0 0 1-.75.75h-5.1a2.93 2.93 0 0 1-5.66 0H2.75a.75.75 0 1 1 0-1.5h7.74a2.93 2.93 0 0 1 5.66 0h5.1a.75.75 0 0 1 .75.75m0-13.21a.75.75 0 0 1-.75.75H18.8a2.93 2.93 0 0 1-5.66 0H2.75a.75.75 0 1 1 0-1.5h10.39a2.93 2.93 0 0 1 5.66 0h2.45a.74.74 0 0 1 .75.75m0 6.6a.74.74 0 0 1-.75.75H9.55a2.93 2.93 0 0 1-5.66 0H2.75a.75.75 0 1 1 0-1.5h1.14a2.93 2.93 0 0 1 5.66 0h11.7a.75.75 0 0 1 .75.75"
-        />
-      </svg>
-    </button>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="icon icon-tabler icon-tabler-search stroke-slate-600 dark:stroke-slate-100"
+          width={24}
+          height={24}
+          viewBox="0 0 24 24"
+        >
+          <path
+            fill="currentColor"
+            d="M22 18.605a.75.75 0 0 1-.75.75h-5.1a2.93 2.93 0 0 1-5.66 0H2.75a.75.75 0 1 1 0-1.5h7.74a2.93 2.93 0 0 1 5.66 0h5.1a.75.75 0 0 1 .75.75m0-13.21a.75.75 0 0 1-.75.75H18.8a2.93 2.93 0 0 1-5.66 0H2.75a.75.75 0 1 1 0-1.5h10.39a2.93 2.93 0 0 1 5.66 0h2.45a.74.74 0 0 1 .75.75m0 6.6a.74.74 0 0 1-.75.75H9.55a2.93 2.93 0 0 1-5.66 0H2.75a.75.75 0 1 1 0-1.5h1.14a2.93 2.93 0 0 1 5.66 0h11.7a.75.75 0 0 1 .75.75"
+          />
+        </svg>
+      </button>
+    </div>
+    {#if filteredSuggestions.length > 0}
+      <ul class="suggestions">
+        {#each filteredSuggestions as suggestion}
+          <li>
+            <button on:click={() => selectSuggestion(suggestion)}>
+              {suggestion}
+            </button>
+          </li>
+        {/each}
+      </ul>
+    {/if}
   </div>
-  {#if searchQuery?.length > 1}
+  {#if searchQuery.length > 1}
     <p>
       Found {posts.length}
       {posts.length === 1 ? "result" : "results"} for '{searchQuery}'
@@ -162,5 +160,23 @@
   .search-results li a {
     color: blue; /* Placeholder styling; adjust as needed */
     text-decoration: none;
+  }
+  .autocomplete-container {
+    position: relative;
+    display: inline-block; /* or 'block' depending on your layout */
+    width: 100%;
+  }
+  .suggestions {
+    position: absolute;
+    width: 100%; /* Match the input field's width */
+    z-index: 10; /* Ensure it's above other content */
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border: 1px solid #ccc;
+    background: white;
+    border-top: none; /* Remove top border to blend with input */
+    max-height: 200px; /* Limit height and add scroll */
+    overflow-y: auto;
   }
 </style>
