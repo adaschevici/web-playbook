@@ -14,6 +14,7 @@
   let searchQuery: string = "";
   let fuse: Fuse<Post>;
   let searchInput: HTMLInputElement;
+  let anySearchExecuted: boolean = false;
   let filteredSuggestions: string[] = [];
 
   onMount(() => {
@@ -34,7 +35,7 @@
   }
 </script>
 
-<div>
+<div class="autocomplete-container">
   <label
     for="searchInput"
     class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
@@ -102,13 +103,13 @@
       </svg>
     </button>
   </div>
-  {#if searchQuery.length > 1}
+  {#if searchQuery.length > 1 && anySearchExecuted}
     <p>
       Found {posts.length}
       {posts.length === 1 ? "result" : "results"} for '{searchQuery}'
     </p>
   {/if}
-  <ul class="search-results">
+  <ul class="suggestions">
     {#if posts.length > 0}
       {#each posts as post}
         <li>
@@ -127,10 +128,27 @@
 
 <style>
   /* Basic styles for improved appearance */
-  .search-results {
+  .autocomplete-container {
+    position: relative;
+    display: inline-block; /* or 'block' depending on your layout */
+    width: 100%;
+  }
+  .suggestions {
+    position: absolute;
+    width: 100%; /* Match the input field's width */
+    z-index: 10; /* Ensure it's above other content */
     list-style: none;
     padding: 0;
+    margin: 0;
+    background: white;
+    border-top: none; /* Remove top border to blend with input */
+    max-height: 200px; /* Limit height and add scroll */
+    overflow-y: auto;
   }
+  /* .search-results {
+    list-style: none;
+    padding: 0;
+  } */
   .search-results li a {
     color: blue; /* Placeholder styling; adjust as needed */
     text-decoration: none;

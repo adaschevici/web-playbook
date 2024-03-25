@@ -2,6 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import SearchBar from "../components/SearchBar.astro";
 import ThemeSwitcher from "../components/ThemeSwitcher.astro";
+import Facets from "../components/Facets.svelte";
 ---
 
 <Layout title="MyBlog">
@@ -10,11 +11,14 @@ import ThemeSwitcher from "../components/ThemeSwitcher.astro";
       <h1
         class="text-5xl lg:text-9xl font-bold bg-clip-text text-transparent bg-gradient-to-tr from-blue-500 to-orange-500 text-center ubuntu-mono-regular"
       >
-        Lense
+        ReSearch
       </h1>
     </div>
     <div class="mx-auto w-[85vw] md:w-[50vw] lg:w-[35vw] xl:w-[30vw]">
       <SearchBar />
+    </div>
+    <div class="flex w-[18vw]">
+      <Facets />
     </div>
   </div>
 </Layout>
