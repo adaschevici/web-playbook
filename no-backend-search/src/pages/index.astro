@@ -3,6 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import SearchBar from "../components/SearchBar.astro";
 import ThemeSwitcher from "../components/ThemeSwitcher.astro";
 import Facets from "../components/Facets.svelte";
+import Card from "../components/Card.astro";
 ---
 
 <Layout title="MyBlog">
@@ -17,8 +18,9 @@ import Facets from "../components/Facets.svelte";
     <div class="mx-auto w-[85vw] md:w-[50vw] lg:w-[35vw] xl:w-[30vw]">
       <SearchBar />
     </div>
-    <div class="flex w-[18vw]">
+    <div class="flex">
       <Facets />
+      <Card />
     </div>
   </div>
 </Layout>

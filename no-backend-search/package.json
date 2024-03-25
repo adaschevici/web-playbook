@@ -22,6 +22,6 @@
     "typescript": "^5.4.3"
   },
   "devDependencies": {
-    "simple-svelte-autocomplete": "^2.5.2"
+    "nanostores": "^0.10.0"
   }
 }

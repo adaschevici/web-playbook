@@ -8,4 +8,10 @@ interface Post {
     };
 }
 
-export type { Post }
+interface Result {
+    title: string;
+    description: string;
+    url: string;
+}
+
+export type { Post, Result };
