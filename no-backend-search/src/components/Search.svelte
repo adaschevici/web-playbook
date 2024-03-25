@@ -66,7 +66,7 @@
       class="block w-full p-4 pl-10 text-sm
          color-slate-900 dark:text-slate-100
          border border-gray-600 dark:border-gray-300
-         rounded-full bg-gray-50
+         {posts.length ? 'rounded-t-lg' : 'rounded-full'} bg-gray-50
          dark:bg-finder-grey
 
          focus:outline-none
@@ -109,7 +109,9 @@
       {posts.length === 1 ? "result" : "results"} for '{searchQuery}'
     </p>
   {/if}
-  <ul class="suggestions">
+  <ul
+    class="suggestions {posts.length && 'border border-gray-600 rounded-b-lg'}"
+  >
     {#if posts.length > 0}
       {#each posts as post}
         <li>
@@ -120,8 +122,6 @@
           <p class="text-gray-500">{post.frontmatter.description}</p>
         </li>
       {/each}
-    {:else}
-      <li>No results found</li>
     {/if}
   </ul>
 </div>
@@ -138,7 +138,8 @@
     width: 100%; /* Match the input field's width */
     z-index: 10; /* Ensure it's above other content */
     list-style: none;
-    padding: 0;
+    padding-left: 35px;
+    padding-right: 15px;
     margin: 0;
     background: white;
     border-top: none; /* Remove top border to blend with input */
