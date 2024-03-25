@@ -15,7 +15,6 @@
   let fuse: Fuse<Post>;
   let searchInput: HTMLInputElement;
   let anySearchExecuted: boolean = false;
-  let filteredSuggestions: string[] = [];
 
   onMount(() => {
     fuse = new Fuse(searchIndex, options);
