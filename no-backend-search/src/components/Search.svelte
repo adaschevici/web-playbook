@@ -110,7 +110,8 @@
     </p>
   {/if}
   <ul
-    class="suggestions {posts.length && 'border border-gray-600 rounded-b-lg'}"
+    class="suggestions {posts.length &&
+      'border border-gray-600 rounded-b-lg dark:border-gray-300'}"
   >
     {#if posts.length > 0}
       {#each posts as post}
@@ -141,7 +142,6 @@
     padding-left: 35px;
     padding-right: 15px;
     margin: 0;
-    background: white;
     border-top: none; /* Remove top border to blend with input */
     max-height: 200px; /* Limit height and add scroll */
     overflow-y: auto;
