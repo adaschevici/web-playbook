@@ -3,6 +3,7 @@
   import { onMount } from 'svelte';
   import type { Post } from '../types/interface';
   import { setResults } from '../stores/search.ts';
+  import { facetsVisible } from '../stores/facets.ts';
 
   const options = {
     keys: ['frontmatter.title', 'frontmatter.description', 'frontmatter.slug'],
@@ -88,7 +89,7 @@
     />
     <button
       class="pointer-events-auto absolute inset-y-0 right-0 flex items-center pr-5"
-      on:click={() => console.log('Filter button clicked')}
+      on:click={() => ($facetsVisible = !$facetsVisible)}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
