@@ -33,6 +33,17 @@
   $: if (searchQuery.length === 0) {
     posts = [];
   }
+  const handleKeyEvents = (e: KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      setResults(posts);
+      searchQuery = '';
+      searchInput.focus();
+    }
+    if (e.key === 'Escape') {
+      searchQuery = '';
+      searchInput.focus();
+    }
+  };
 </script>
 
 <div class="autocomplete-container">
@@ -71,13 +82,7 @@
       type="text"
       bind:value={searchQuery}
       on:input={() => {}}
-      on:keydown={(e) => {
-        if (e.key === 'Enter') {
-          setResults(posts);
-          searchQuery = '';
-          searchInput.focus();
-        }
-      }}
+      on:keydown={handleKeyEvents}
       placeholder="Search for anything..."
       bind:this={searchInput}
     />
