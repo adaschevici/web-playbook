@@ -76,40 +76,47 @@ const toggleTheme = () => {
 
 		const currentTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : null;
 
-    if (currentTheme) {
-      document.documentElement.classList.remove('dark');
-      document.documentElement.classList.add(currentTheme);
-    }
 
 		const setTheme = (theme) => {
       localStorage.setItem('theme', theme);
+      document.documentElement.classList.remove('light', 'dark');
       document.documentElement.classList.add(theme);
     };
 
     const setCheckboxState = (theme) => {
+
+      if (theme === 'dark') {
+        button.checked = false;
+      }
       if (theme === 'light') {
         button.checked = true;
-      } else {
-        button.checked = false;
       }
     };
 
 		const switchTheme = () => {
 			if (localStorage.theme === 'dark') {
-        document.documentElement.classList.remove('dark');
+         document.documentElement.classList.remove('light', 'dark');
         localStorage.setItem('theme', 'light');
 		  } else {
+        document.documentElement.classList.remove('light', 'dark');
         document.documentElement.classList.add('dark');
 			  localStorage.setItem('theme', 'dark');
 			}
 		};
 
-		if ( localStorage.theme ) {
-		     console.log('theme is set');
-			   setTheme(localStorage.theme);
+    if (currentTheme) {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add(currentTheme);
+      setCheckboxState(currentTheme);
+    }
 
-		}
-		setCheckboxState(localStorage.theme);
+		if ( currentTheme ) {
+			   setTheme(currentTheme);
+		     setCheckboxState(currentTheme);
+		} else {
+      setTheme('light');
+      setCheckboxState('light');
+    }
 		button.addEventListener('click', () => {
 			switchTheme();
 		});
