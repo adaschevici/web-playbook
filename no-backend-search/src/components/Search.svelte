@@ -2,6 +2,7 @@
   import Fuse from "fuse.js";
   import { onMount } from "svelte";
   import type { Post } from "../types/interface";
+  import { setResults } from "../stores/search.ts";
 
   const options = {
     keys: ["frontmatter.title", "frontmatter.description", "frontmatter.slug"],
@@ -77,6 +78,7 @@
       on:input={() => {}}
       on:keydown={(e) => {
         if (e.key === "Enter") {
+          setResults(posts);
           searchQuery = "";
           searchInput.focus();
         }

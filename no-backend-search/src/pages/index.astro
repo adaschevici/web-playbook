@@ -4,6 +4,7 @@ import SearchBar from "../components/SearchBar.astro";
 import ThemeSwitcher from "../components/ThemeSwitcher.astro";
 import Facets from "../components/Facets.svelte";
 import Card from "../components/Card.astro";
+import Results from "../components/Results.svelte";
 ---
 
 <Layout title="MyBlog">
@@ -19,8 +20,8 @@ import Card from "../components/Card.astro";
       <SearchBar />
     </div>
     <div class="flex">
-      <Facets />
-      <Card />
+      <Facets client:load />
+      <Results client:load />
     </div>
   </div>
 </Layout>
