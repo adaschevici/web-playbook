@@ -1,17 +1,17 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import SearchBar from "../components/SearchBar.astro";
-import ThemeSwitcher from "../components/ThemeSwitcher.astro";
-import Facets from "../components/Facets.svelte";
-import Card from "../components/Card.astro";
-import Results from "../components/Results.svelte";
+import Layout from '../layouts/Layout.astro';
+import SearchBar from '../components/SearchBar.astro';
+import ThemeSwitcher from '../components/ThemeSwitcher.astro';
+import Facets from '../components/Facets.svelte';
+import Card from '../components/Card.astro';
+import Results from '../components/Results.svelte';
 ---
 
 <Layout title="MyBlog">
-  <div class="flex flex-col justify-center align-middle h-[50vh]">
+  <div class="flex h-[50vh] flex-col justify-center align-middle">
     <div class="py-5 lg:py-8">
       <h1
-        class="text-5xl lg:text-9xl font-bold bg-clip-text text-transparent bg-gradient-to-tr from-blue-500 to-orange-500 text-center ubuntu-mono-regular"
+        class="ubuntu-mono-regular bg-gradient-to-tr from-blue-500 to-orange-500 bg-clip-text text-center text-5xl font-bold text-transparent lg:text-9xl"
       >
         ReSearch
       </h1>
@@ -30,25 +30,25 @@ import Results from "../components/Results.svelte";
   @import url('https://fonts.googleapis.com/css2?family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
   .ubuntu-mono-regular {
-    font-family: "Ubuntu Mono", monospace;
+    font-family: 'Ubuntu Mono', monospace;
     font-weight: 400;
     font-style: normal;
   }
 
   .ubuntu-mono-bold {
-    font-family: "Ubuntu Mono", monospace;
+    font-family: 'Ubuntu Mono', monospace;
     font-weight: 700;
     font-style: normal;
   }
 
   .ubuntu-mono-regular-italic {
-    font-family: "Ubuntu Mono", monospace;
+    font-family: 'Ubuntu Mono', monospace;
     font-weight: 400;
     font-style: italic;
   }
 
   .ubuntu-mono-bold-italic {
-    font-family: "Ubuntu Mono", monospace;
+    font-family: 'Ubuntu Mono', monospace;
     font-weight: 700;
     font-style: italic;
   }

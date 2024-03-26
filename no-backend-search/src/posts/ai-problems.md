@@ -1,5 +1,5 @@
 ---
-title: AI problems we'll face in a few years 
+title: AI problems we'll face in a few years
 slug: ai-problems
 description: AI is a huge problem bro! But it'll help humanity (or maybe destroy it)
 ---

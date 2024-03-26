@@ -1,40 +1,27 @@
 ---
 // src/components/ThemeToggle.astro
 const toggleTheme = () => {
-  document.documentElement.classList.toggle("dark");
+  document.documentElement.classList.toggle('dark');
 };
 ---
 
-<div class="flex justify-end pt-6 pr-6">
-  <label for="toggle" class="flex items-center cursor-pointer theme-switch">
+<div class="flex justify-end pr-6 pt-6">
+  <label for="toggle" class="theme-switch flex cursor-pointer items-center">
     <div class="relative">
-      <input
-        type="checkbox"
-        id="toggle"
-        class="sr-only"
-        onchange={toggleTheme}
-      />
-      <div class="block bg-gray-300 dark:bg-gray-600 w-14 h-8 rounded-full">
+      <input type="checkbox" id="toggle" class="sr-only" onchange={toggleTheme} />
+      <div class="block h-8 w-14 rounded-full bg-gray-300 dark:bg-gray-600">
         <div class="flex p-[2px]">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="2em"
-            height="2em"
-            viewBox="0 0 24 24">
+          <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 24 24">
             <path
               fill="none"
               stroke="orange"
               stroke-linecap="round"
               stroke-linejoin="round"
               stroke-width="2"
-              d="M8 12a4 4 0 1 0 8 0a4 4 0 1 0-8 0m-5 0h1m8-9v1m8 8h1m-9 8v1M5.6 5.6l.7.7m12.1-.7l-.7.7m0 11.4l.7.7m-12.1-.7l-.7.7"/>
+              d="M8 12a4 4 0 1 0 8 0a4 4 0 1 0-8 0m-5 0h1m8-9v1m8 8h1m-9 8v1M5.6 5.6l.7.7m12.1-.7l-.7.7m0 11.4l.7.7m-12.1-.7l-.7.7"
+            ></path>
           </svg>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="1.7em"
-            height="1.7em"
-            viewBox="0 0 24 24"
-            >
+          <svg xmlns="http://www.w3.org/2000/svg" width="1.7em" height="1.7em" viewBox="0 0 24 24">
             <g fill="none" fill-rule="evenodd">
               <path
                 d="M24 0v24H0V0zM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427c-.002-.01-.009-.017-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093c.012.004.023 0 .029-.008l.004-.014l-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014l-.034.614c0 .012.007.02.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"
@@ -43,18 +30,18 @@ const toggleTheme = () => {
               <path
                 fill="rgb(168, 85, 247)"
                 d="M13.574 3.137a1.01 1.01 0 0 0-1.097 1.409a6 6 0 0 1-7.931 7.931a1.01 1.01 0 0 0-1.409 1.097A9 9 0 0 0 21 12c0-4.434-3.206-8.118-7.426-8.863m1.307 2.481A7.002 7.002 0 0 1 12 19a7.002 7.002 0 0 1-6.382-4.12a8 8 0 0 0 9.263-9.263Z"
-                >
+              >
               </path>
             </g>
           </svg>
         </div>
       </div>
       <div
-        class="dot absolute left-1 top-1 bg-slate-400 dark:bg-white w-6 h-6 rounded-full transition"
+        class="dot absolute left-1 top-1 h-6 w-6 rounded-full bg-slate-400 transition dark:bg-white"
       >
       </div>
     </div>
-    <div class="ml-3 text-gray-700 font-medium">Toggle Theme</div>
+    <div class="ml-3 font-medium text-gray-700">Toggle Theme</div>
   </label>
 </div>
 
@@ -69,22 +56,20 @@ const toggleTheme = () => {
 </style>
 
 <script>
-	document.addEventListener('DOMContentLoaded', function ready() {
-		const button = document.querySelector(
-			'.theme-switch input[type="checkbox"]'
-		) as HTMLInputElement;
+  document.addEventListener('DOMContentLoaded', function ready() {
+    const button = document.querySelector(
+      '.theme-switch input[type="checkbox"]',
+    ) as HTMLInputElement;
 
-		const currentTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : null;
+    const currentTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : null;
 
-
-		const setTheme = (theme) => {
+    const setTheme = (theme) => {
       localStorage.setItem('theme', theme);
       document.documentElement.classList.remove('light', 'dark');
       document.documentElement.classList.add(theme);
     };
 
     const setCheckboxState = (theme) => {
-
       if (theme === 'dark') {
         button.checked = false;
       }
@@ -93,16 +78,16 @@ const toggleTheme = () => {
       }
     };
 
-		const switchTheme = () => {
-			if (localStorage.theme === 'dark') {
-         document.documentElement.classList.remove('light', 'dark');
+    const switchTheme = () => {
+      if (localStorage.theme === 'dark') {
+        document.documentElement.classList.remove('light', 'dark');
         localStorage.setItem('theme', 'light');
-		  } else {
+      } else {
         document.documentElement.classList.remove('light', 'dark');
         document.documentElement.classList.add('dark');
-			  localStorage.setItem('theme', 'dark');
-			}
-		};
+        localStorage.setItem('theme', 'dark');
+      }
+    };
 
     if (currentTheme) {
       document.documentElement.classList.remove('dark');
@@ -110,15 +95,15 @@ const toggleTheme = () => {
       setCheckboxState(currentTheme);
     }
 
-		if ( currentTheme ) {
-			   setTheme(currentTheme);
-		     setCheckboxState(currentTheme);
-		} else {
+    if (currentTheme) {
+      setTheme(currentTheme);
+      setCheckboxState(currentTheme);
+    } else {
       setTheme('light');
       setCheckboxState('light');
     }
-		button.addEventListener('click', () => {
-			switchTheme();
-		});
-	});
+    button.addEventListener('click', () => {
+      switchTheme();
+    });
+  });
 </script>

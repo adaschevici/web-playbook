@@ -1,5 +1,5 @@
 ---
-title: How to create search component 
+title: How to create search component
 slug: search-component
 description: Let's build a search component
 ---

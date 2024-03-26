@@ -1,18 +1,18 @@
 <script lang="ts">
-  import Fuse from "fuse.js";
-  import { onMount } from "svelte";
-  import type { Post } from "../types/interface";
-  import { setResults } from "../stores/search.ts";
+  import Fuse from 'fuse.js';
+  import { onMount } from 'svelte';
+  import type { Post } from '../types/interface';
+  import { setResults } from '../stores/search.ts';
 
   const options = {
-    keys: ["frontmatter.title", "frontmatter.description", "frontmatter.slug"],
+    keys: ['frontmatter.title', 'frontmatter.description', 'frontmatter.slug'],
     includeMatches: true,
     minMatchCharLength: 2,
     threshold: 0.5,
   };
   export let searchIndex: Post[];
   let posts: Post[] = [];
-  let searchQuery: string = "";
+  let searchQuery: string = '';
   let fuse: Fuse<Post>;
   let searchInput: HTMLInputElement;
   let anySearchExecuted: boolean = false;
@@ -36,16 +36,11 @@
 </script>
 
 <div class="autocomplete-container">
-  <label
-    for="searchInput"
-    class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
-  >
+  <label for="searchInput" class="sr-only mb-2 text-sm font-medium text-gray-900 dark:text-white">
     Search
   </label>
   <div class="relative">
-    <div
-      class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
-    >
+    <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         class="icon icon-tabler icon-tabler-search stroke-slate-600 dark:stroke-slate-100"
@@ -63,23 +58,23 @@
       </svg>
     </div>
     <input
-      class="block w-full p-4 pl-10 text-sm
-         color-slate-900 dark:text-slate-100
-         border border-gray-600 dark:border-gray-300
+      class="color-slate-900 block w-full border border-gray-600
+         p-4 pl-10
+         text-sm dark:border-gray-300 dark:text-slate-100
          {posts.length ? 'rounded-t-lg' : 'rounded-full'} bg-gray-50
-         dark:bg-finder-grey
+         focus:border-blue-500
 
          focus:outline-none
          focus:ring-blue-500
-         focus:border-blue-500"
+         dark:bg-finder-grey"
       id="searchInput"
       type="text"
       bind:value={searchQuery}
       on:input={() => {}}
       on:keydown={(e) => {
-        if (e.key === "Enter") {
+        if (e.key === 'Enter') {
           setResults(posts);
-          searchQuery = "";
+          searchQuery = '';
           searchInput.focus();
         }
       }}
@@ -87,8 +82,8 @@
       bind:this={searchInput}
     />
     <button
-      class="absolute inset-y-0 right-0 flex items-center pr-5 pointer-events-auto"
-      on:click={() => console.log("Filter button clicked")}
+      class="pointer-events-auto absolute inset-y-0 right-0 flex items-center pr-5"
+      on:click={() => console.log('Filter button clicked')}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -107,18 +102,17 @@
   {#if searchQuery.length > 1 && anySearchExecuted}
     <p>
       Found {posts.length}
-      {posts.length === 1 ? "result" : "results"} for '{searchQuery}'
+      {posts.length === 1 ? 'result' : 'results'} for '{searchQuery}'
     </p>
   {/if}
   <ul
-    class="suggestions {posts.length &&
-      'border border-gray-600 rounded-b-lg dark:border-gray-300'}"
+    class="suggestions {posts.length && 'rounded-b-lg border border-gray-600 dark:border-gray-300'}"
   >
     {#if posts.length > 0}
       {#each posts as post}
         <li>
           <a
-            class="text-lg text-blue-700 hover:text-blue-900 hover:underline underline-offset-2"
+            class="text-lg text-blue-700 underline-offset-2 hover:text-blue-900 hover:underline"
             href={`/${post.frontmatter.slug}`}>{post.frontmatter.title}</a
           >
           <p class="text-gray-500">{post.frontmatter.description}</p>

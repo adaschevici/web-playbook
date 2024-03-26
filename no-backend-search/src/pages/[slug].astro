@@ -1,27 +1,30 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import type { Post } from "../types/interface";
+import Layout from '../layouts/Layout.astro';
+import type { Post } from '../types/interface';
 
 export async function getStaticPaths() {
-  const allPosts: any = await Astro.glob("../posts/*{md,mdx}");
+  const allPosts: any = await Astro.glob('../posts/*{md,mdx}');
   const posts: Post[] = allPosts.filter(
-    (post: Post) => !post.frontmatter.draft && post.frontmatter.slug
+    (post: Post) => !post.frontmatter.draft && post.frontmatter.slug,
   );
 
   return posts.map((post: Post) => ({
     params: {
       slug: post.frontmatter.slug,
     },
-    props: {post}
+    props: { post },
   }));
 }
 
 const { post } = Astro.props;
 ---
+
 <Layout title={post.frontmatter.title}>
-	<div class="pb-12 mx-auto max-w-3xl prose prose-md prose-headings:font-bold prose-a:text-blue-600">
-		<h2 class="text-center text-5xl pt-12 pb-3">{post.frontmatter.title}</h2>
-		<p class="text-center text-lg text-gray-600 pb-4">{post.frontmatter.description}</p>
-		<post.Content />
-	</div>
+  <div
+    class="prose prose-md prose-headings:font-bold prose-a:text-blue-600 mx-auto max-w-3xl pb-12"
+  >
+    <h2 class="pb-3 pt-12 text-center text-5xl">{post.frontmatter.title}</h2>
+    <p class="pb-4 text-center text-lg text-gray-600">{post.frontmatter.description}</p>
+    <post.Content />
+  </div>
 </Layout>

@@ -1,7 +1,7 @@
 <script>
   let aggregations = [
     {
-      _key: "DORA",
+      _key: 'DORA',
       _doc_count: 24,
     },
   ];
@@ -11,7 +11,7 @@
   }
 </script>
 
-<div class="filter">
+<div class="mt-16 max-w-xs filter">
   <h1>Legislative frameworks</h1>
   <div id="language-filter" class="container">
     {#each aggregations as aggregation (aggregation._key)}
@@ -67,7 +67,7 @@
     box-sizing: border-box;
     padding: 16px;
     align-items: center;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
+    font-family: Roboto, 'Helvetica Neue', sans-serif;
     font-size: 17px;
     font-weight: 500;
     color: rgb(10 10 34);
