@@ -22,6 +22,7 @@
     "typescript": "^5.4.3"
   },
   "devDependencies": {
+    "@nanostores/persistent": "^0.10.1",
     "nanostores": "^0.10.0",
     "prettier": "^3.2.5",
     "prettier-plugin-astro": "^0.13.0",

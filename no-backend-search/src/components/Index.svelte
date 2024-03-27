@@ -20,9 +20,9 @@
   </div>
   <div class="flex">
     {#if $facetsVisible}
-      <Facets visible={true} />
-    {:else}
       <Facets visible={false} />
+    {:else}
+      <Facets visible={true} />
     {/if}
     <Results />
   </div>

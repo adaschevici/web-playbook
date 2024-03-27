@@ -1,13 +1,14 @@
-import { atom }from 'nanostores';
+import { persistentAtom } from '@nanostores/persistent';
+import { atom } from 'nanostores';
 import type { Facet } from '../types/interfaces';
 
-export const facets = atom([{
+export const facets = persistentAtom<Facet[]>('facets', [{
   _key: 'DORA',
   _doc_count: 24,
   _name: 'DORA',
   _selected: false,
 
-}]);
+}], { encode: JSON.stringify, decode: JSON.parse });
 
 
 export const facetsVisible = atom(false);

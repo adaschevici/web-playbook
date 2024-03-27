@@ -1,8 +1,7 @@
 <script lang="ts">
-  import { facets, updateFacets } from '../stores/facets.ts';
+  import { facets, updateFacets, facetsVisible } from '../stores/facets.ts';
   import type { Facet } from '../types/interface';
-
-  export let visible = false;
+  export let visible;
 
   function handleSelect(e, aggregation: Facet) {
     updateFacets([{ ...aggregation, _selected: !aggregation._selected }]);
