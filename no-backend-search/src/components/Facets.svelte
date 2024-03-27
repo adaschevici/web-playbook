@@ -6,12 +6,13 @@
     },
   ];
 
+  export let visible = false;
   function handleSelect(e, aggregation) {
     console.log(aggregation);
   }
 </script>
 
-<div class="mt-16 max-w-xs filter">
+<div class="mt-16 max-w-xs filter {visible ? 'invisible' : ''}">
   <h1>Legislative frameworks</h1>
   <div id="language-filter" class="container">
     {#each aggregations as aggregation (aggregation._key)}
