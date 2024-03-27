@@ -3,7 +3,7 @@
   import type { Facet } from '../types/interface';
   export let visible;
 
-  function handleSelect(e, aggregation: Facet) {
+  function handleSelect(_e: Event, aggregation: Facet) {
     updateFacets([{ ...aggregation, _selected: !aggregation._selected }]);
   }
 </script>
@@ -13,7 +13,6 @@
   <div id="language-filter" class="container">
     {#each $facets as aggregation (aggregation._key)}
       {#if aggregation._key}
-        {console.log($facets)}
         <label class="filter__input">
           <input
             type="checkbox"
