@@ -1,12 +1,8 @@
 <script>
-  let aggregations = [
-    {
-      _key: 'DORA',
-      _doc_count: 24,
-    },
-  ];
+  import { facets } from '../stores/facets.ts';
 
   export let visible = false;
+
   function handleSelect(e, aggregation) {
     console.log(aggregation);
   }
@@ -15,14 +11,14 @@
 <div class="mt-16 max-w-xs filter {visible ? 'invisible' : ''}">
   <h1>Legislative frameworks</h1>
   <div id="language-filter" class="container">
-    {#each aggregations as aggregation (aggregation._key)}
+    {#each $facets as aggregation (aggregation._key)}
       {#if aggregation._key}
         <label class="filter__input">
           <input
             type="checkbox"
             on:click={(e) => handleSelect(e, aggregation)}
             class="filter__check"
-            name={aggregation._key}
+            name={aggregation._name}
             value={aggregation._key}
           />
           <span class="text">{aggregation._key}</span>
