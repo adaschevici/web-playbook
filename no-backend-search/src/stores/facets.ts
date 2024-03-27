@@ -12,10 +12,19 @@ export const facets = atom([{
 
 export const facetsVisible = atom(false);
 
-export const addFacets = (facets: Facet) => {
-  facets.set([...facets.get(), ...facets]);
+const updateFacets = (facet: Facet) => {
+  const mergedFacets: Facet[] = [...facets.get(), ...facet].reduce((acc, current) => {
+    acc[current._key] = current;
+    return acc;
+  }, {});
+  console.log(mergedFacets);
+  facets.set(Object.values(mergedFacets));
 }
 
 export const removeFacets = (facet: Facet) => {
   facets.set(facets.get().filter(f => f !== facet));
+}
+
+export {
+  updateFacets
 }

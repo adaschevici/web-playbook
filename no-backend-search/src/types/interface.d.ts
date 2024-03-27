@@ -14,4 +14,11 @@ interface Result {
   url: string;
 }
 
-export type { Post, Result };
+interface Facet {
+  _key: string;
+  _doc_count: number;
+  _name: string;
+  _selected: boolean;
+}
+
+export type { Post, Result, Facet };

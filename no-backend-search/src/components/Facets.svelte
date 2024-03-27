@@ -1,10 +1,11 @@
-<script>
-  import { facets } from '../stores/facets.ts';
+<script lang="ts">
+  import { facets, updateFacets } from '../stores/facets.ts';
+  import type { Facet } from '../types/interface';
 
   export let visible = false;
 
-  function handleSelect(e, aggregation) {
-    console.log(aggregation);
+  function handleSelect(e, aggregation: Facet) {
+    updateFacets([{ ...aggregation, _selected: !aggregation._selected }]);
   }
 </script>
 
@@ -13,6 +14,7 @@
   <div id="language-filter" class="container">
     {#each $facets as aggregation (aggregation._key)}
       {#if aggregation._key}
+        {console.log($facets)}
         <label class="filter__input">
           <input
             type="checkbox"
@@ -20,6 +22,7 @@
             class="filter__check"
             name={aggregation._name}
             value={aggregation._key}
+            checked={aggregation._selected}
           />
           <span class="text">{aggregation._key}</span>
           <span class="doc_count">{aggregation._doc_count}</span>
