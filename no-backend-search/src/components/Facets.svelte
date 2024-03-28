@@ -9,7 +9,9 @@
 </script>
 
 <div class="mt-16 max-w-xs filter {visible ? 'invisible' : ''}">
-  <h1>Legislative frameworks</h1>
+  <h1>
+    <span class="text-slate-600 dark:text-gray-400">Legislative frameworks</span>
+  </h1>
   <div id="language-filter" class="container">
     {#each $facets as aggregation (aggregation._key)}
       {#if aggregation._key}
@@ -22,7 +24,7 @@
             value={aggregation._key}
             checked={aggregation._selected}
           />
-          <span class="text">{aggregation._key}</span>
+          <span class="text dark:text-gray-400">{aggregation._key}</span>
           <span class="doc_count">{aggregation._doc_count}</span>
         </label>
       {/if}
