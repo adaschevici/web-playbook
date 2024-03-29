@@ -73,12 +73,12 @@
       class="color-slate-900 block w-full border border-gray-600
          p-4 pl-10
          text-sm dark:border-gray-300 dark:text-slate-100
-         {posts.length ? 'rounded-t-lg' : 'rounded-full'} bg-gray-50
-         focus:border-blue-500
+         {posts.length ? 'rounded-t-lg' : 'rounded-full'} bg-light-grey-custom
+         dark:bg-dark-grey-custom
 
+         focus:border-blue-500
          focus:outline-none
-         focus:ring-blue-500
-         dark:bg-finder-grey"
+         focus:ring-blue-500"
       id="searchInput"
       type="text"
       bind:value={searchQuery}
@@ -113,7 +113,7 @@
   {/if}
   <ul
     class="suggestions {posts.length &&
-      'rounded-b-lg border border-gray-600 bg-finder-grey dark:border-gray-300'}"
+      'bg-light-grey-custom dark:bg-dark-grey-custom rounded-b-lg border border-gray-600 dark:border-gray-300'}"
   >
     {#if posts.length > 0}
       {#each posts as post}
