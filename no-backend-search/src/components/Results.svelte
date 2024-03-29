@@ -4,8 +4,10 @@
 </script>
 
 {#if $searchResults.length !== 0}
-  {#each $searchResults as post}
-    <Card href={post.frontmatter.slug} title={post.frontmatter.title} body={post.Content} />
-  {/each}
-  <p>Found {$searchResults.length} results</p>
+  <div class="absolute">
+    {#each $searchResults as post}
+      <Card href={post.frontmatter.slug} title={post.frontmatter.title} body={post.Content} />
+    {/each}
+    <p>Found {$searchResults.length} results</p>
+  </div>
 {/if}

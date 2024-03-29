@@ -24,7 +24,9 @@
     {:else}
       <Facets visible={true} />
     {/if}
-    <Results />
+    <div class="relative flex flex-col">
+      <Results />
+    </div>
   </div>
 </div>
 
