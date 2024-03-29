@@ -50,7 +50,6 @@
   h2 {
     margin: 0;
     font-size: 1.25rem;
-    transition: color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
   }
   p {
     margin-top: 0.5rem;
@@ -59,8 +58,5 @@
   .link-card:is(:hover, :focus-within) {
     background-position: 0;
     background-image: var(--accent-gradient);
-  }
-  .link-card:is(:hover, :focus-within) h2 {
-    color: rgb(var(--accent-light));
   }
 </style>
