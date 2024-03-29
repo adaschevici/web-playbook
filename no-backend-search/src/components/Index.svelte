@@ -10,9 +10,9 @@
 <div class="flex h-[50vh] flex-col justify-center align-middle">
   <div class="py-5 lg:py-8">
     <h1
-      class="ubuntu-mono-regular bg-gradient-to-tr from-blue-500 to-orange-500 bg-clip-text text-center text-5xl font-bold text-transparent lg:text-9xl"
+      class="ubuntu-mono-regular bg-gradient-to-tr from-blue-500 to-orange-500 bg-clip-text text-center text-2xl font-bold text-transparent lg:text-5xl"
     >
-      ReSearch
+      Search Regulation
     </h1>
   </div>
   <div class="mx-auto w-[85vw] md:w-[50vw] lg:w-[35vw] xl:w-[30vw]">
@@ -35,23 +35,5 @@
     font-family: 'Ubuntu Mono', monospace;
     font-weight: 400;
     font-style: normal;
-  }
-
-  .ubuntu-mono-bold {
-    font-family: 'Ubuntu Mono', monospace;
-    font-weight: 700;
-    font-style: normal;
-  }
-
-  .ubuntu-mono-regular-italic {
-    font-family: 'Ubuntu Mono', monospace;
-    font-weight: 400;
-    font-style: italic;
-  }
-
-  .ubuntu-mono-bold-italic {
-    font-family: 'Ubuntu Mono', monospace;
-    font-weight: 700;
-    font-style: italic;
   }
 </style>
