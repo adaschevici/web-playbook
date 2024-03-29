@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { facets, updateFacets, facetsVisible } from '../stores/facets.ts';
+  import { facets, updateFacets } from '../stores/facets.ts';
   import type { Facet } from '../types/interface';
   export let visible;
 
@@ -8,7 +8,7 @@
   }
 </script>
 
-<div class="mt-16 max-w-xs filter {visible ? 'invisible' : ''}">
+<div class="max-w-xs filter {visible ? 'invisible' : ''}">
   <h1>
     <span class="text-slate-600 dark:text-gray-400">Legislative frameworks</span>
   </h1>

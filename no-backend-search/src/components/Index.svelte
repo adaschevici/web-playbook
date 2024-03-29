@@ -18,7 +18,7 @@
   <div class="mx-auto w-[85vw] md:w-[50vw] lg:w-[35vw] xl:w-[30vw]">
     <SearchBar searchIndex={postList} />
   </div>
-  <div class="flex">
+  <div class="flex gap-32 p-8">
     {#if $facetsVisible}
       <Facets visible={false} />
     {:else}
