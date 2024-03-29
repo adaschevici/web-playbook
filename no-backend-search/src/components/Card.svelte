@@ -7,7 +7,17 @@
 <li class="link-card p-p1 flex rounded-lg bg-light-grey-custom dark:bg-dark-grey-custom">
   <a
     {href}
-    class="w-full rounded-lg bg-light-grey-custom px-[calc(1.5rem-1px)] py-[calc(1.5rem-1px)] leading-normal text-white no-underline opacity-80 dark:bg-dark-grey-custom"
+    class="w-full
+    rounded-lg
+    bg-light-grey-custom
+    px-[calc(1.5rem-1px)]
+    py-[calc(1.5rem-1px)]
+    leading-normal
+    text-dark-grey-custom
+    no-underline
+    opacity-80
+    dark:bg-dark-grey-custom
+    dark:text-gray-100"
   >
     <h2>
       {title}
@@ -29,8 +39,6 @@
     line-height: 1.4;
     padding: calc(1.5rem - 1px);
     border-radius: 8px;
-    color: white;
-    background-color: #23262d;
     opacity: 0.8;
   }
   h2 {
