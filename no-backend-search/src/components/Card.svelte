@@ -4,8 +4,11 @@
   export let body: string;
 </script>
 
-<li class="link-card">
-  <a {href}>
+<li class="link-card p-p1 flex rounded-lg bg-light-grey-custom dark:bg-dark-grey-custom">
+  <a
+    {href}
+    class="w-full rounded-lg bg-light-grey-custom px-[calc(1.5rem-1px)] py-[calc(1.5rem-1px)] leading-normal text-white no-underline opacity-80 dark:bg-dark-grey-custom"
+  >
     <h2>
       {title}
       <span>&rarr;</span>
@@ -18,20 +21,11 @@
 
 <style>
   .link-card {
-    list-style: none;
-    display: flex;
-    padding: 1px;
-    background-color: #23262d;
-    background-image: none;
-    background-size: 400%;
-    border-radius: 7px;
-    background-position: 100%;
     transition: background-position 0.6s cubic-bezier(0.22, 1, 0.36, 1);
     box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
   }
   .link-card > a {
     width: 100%;
-    text-decoration: none;
     line-height: 1.4;
     padding: calc(1.5rem - 1px);
     border-radius: 8px;
