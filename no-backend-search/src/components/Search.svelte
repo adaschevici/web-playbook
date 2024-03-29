@@ -112,7 +112,8 @@
     </p>
   {/if}
   <ul
-    class="suggestions {posts.length && 'rounded-b-lg border border-gray-600 dark:border-gray-300'}"
+    class="suggestions {posts.length &&
+      'rounded-b-lg border border-gray-600 bg-finder-grey dark:border-gray-300'}"
   >
     {#if posts.length > 0}
       {#each posts as post}

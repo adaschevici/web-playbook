@@ -5,7 +5,8 @@ export default {
   theme: {
     extend: {
       colors: {
-        'finder-grey': '#202124',
+        'bg-light-custom-lighter-grey': '#f8f9fd',
+        'bg-dark-finder-grey': '#202124',
       },
     },
   },

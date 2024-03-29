@@ -3,10 +3,7 @@
   import Card from './Card.svelte';
 </script>
 
-{#if $searchResults.length === 0}
-  {$searchResults}
-  <p>No results found</p>
-{:else}
+{#if $searchResults.length !== 0}
   {#each $searchResults as post}
     <Card href={post.frontmatter.slug} title={post.frontmatter.title} body={post.Content} />
   {/each}
