@@ -7,15 +7,19 @@
 <li class="link-card p-p1 flex rounded-lg bg-light-grey-custom dark:bg-dark-grey-custom">
   <a
     {href}
-    class="w-full
+    class="
+    p6
+    w-full
     rounded-lg
+    border
+    border-gray-300
     bg-light-grey-custom
     px-[calc(1.5rem-1px)]
     py-[calc(1.5rem-1px)]
     leading-normal
     text-dark-grey-custom
     no-underline
-    opacity-80
+    opacity-80 shadow-sm
     dark:bg-dark-grey-custom
     dark:text-gray-100"
   >
@@ -32,7 +36,9 @@
 <style>
   .link-card {
     transition: background-position 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+    box-shadow:
+      0 1px 3px rgb(0 0 0 / 12%),
+      0 1px 2px rgb(0 0 0 / 24%);
   }
   .link-card > a {
     width: 100%;

@@ -4,7 +4,7 @@
 </script>
 
 {#if $searchResults.length !== 0}
-  <div class="absolute">
+  <div class="absolute flex w-full flex-col gap-6">
     {#each $searchResults as post}
       <Card href={post.frontmatter.slug} title={post.frontmatter.title} body={post.Content} />
     {/each}
