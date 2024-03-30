@@ -2,6 +2,7 @@
   export let href: string;
   export let title: string;
   export let body: string;
+  export let originalSource: string;
 </script>
 
 <li class="link-card p-p1 flex rounded-lg bg-light-grey-custom dark:bg-dark-grey-custom">
@@ -29,6 +30,14 @@
     </h2>
     <p>
       {body}
+    </p>
+    <p>
+      <span class="text-sm text-gray-500 dark:text-gray-400"> Read more... </span>
+    </p>
+    <p>
+      <span class="text-sm text-gray-500 dark:text-gray-400">
+        {originalSource}
+      </span>
     </p>
   </a>
 </li>
