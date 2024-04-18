@@ -24,7 +24,7 @@ jobs:
 
     - name: Run Puppet tests
       working-directory: puppeteer-snips
-      run: node  grab-element-ss.js # Run one puppteeer script
+      run: node  grab-element-ss.mjs # Run one puppteeer script
 
     - name: Upload Screenshots as Artifacts
       if: always() # Always run this step
