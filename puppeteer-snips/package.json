@@ -4,6 +4,7 @@
 		"esm": "^3.2.25",
 		"jsdom": "^24.0.0",
 		"openai": "^4.37.1",
+		"ora": "^8.0.1",
 		"puppeteer": "^22.6.5",
 		"puppeteer-extra": "^3.3.6",
 		"puppeteer-extra-plugin-stealth": "^2.11.2",
