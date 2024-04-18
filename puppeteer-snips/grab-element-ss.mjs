@@ -1,7 +1,8 @@
-const puppeteer = require('puppeteer-extra');
-const crypto = require('crypto');
+import puppeteer from 'puppeteer';
+import crypto from 'crypto';
 
-const StealthPlugin = require('puppeteer-extra-plugin-stealth')
+import StealthPlugin from 'puppeteer-extra-plugin-stealth';
+
 puppeteer.use(StealthPlugin())
 
 const urls = [

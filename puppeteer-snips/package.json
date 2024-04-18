@@ -1,5 +1,8 @@
 {
 	"dependencies": {
+		"dotenv": "^16.4.5",
+		"esm": "^3.2.25",
+		"openai": "^4.37.1",
 		"puppeteer": "^22.6.5",
 		"puppeteer-extra": "^3.3.6",
 		"puppeteer-extra-plugin-stealth": "^2.11.2",
