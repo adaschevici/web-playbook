@@ -4,6 +4,7 @@ import puppeteer from 'puppeteer-extra';
 import StealthPlugin from 'puppeteer-extra-plugin-stealth';
 import crypto from 'crypto';
 import { JSDOM } from 'jsdom';
+import ora from 'ora';
 
 dotenv.config();
 const openai = new OpenAI();
@@ -14,7 +15,9 @@ const urls = [
 
 puppeteer.use(StealthPlugin())
 
-async function run(propertyInfoHtml) {
+async function run(propertyInfoHtml, spinner) {
+
+  spinner.text = 'Sending HTML to OpenAI';
   const response = await openai.chat.completions.create({
     model: "gpt-4-turbo",
     messages: [
@@ -35,10 +38,11 @@ async function run(propertyInfoHtml) {
       },
     ],
   });
+  spinner.succeed('Received response from OpenAI');
   console.log(response.choices[0]);
 }
 
-async function extractHtml() {
+async function extractHtml(spinner) {
   // usual browser startup:
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
@@ -46,11 +50,13 @@ async function extractHtml() {
     for (const url of urls) {
       const hashed = crypto.createHash('sha256').update(url).digest('hex');
       await page.goto(url);
+      spinner.text = 'Getting element from page';
       const element = await page.$(".in-listAndMapContent__list");
       const innerHtml = await page.evaluate(element => element.innerHTML, element);
       console.log(innerHtml.length);
       browser.close();
       const dom = new JSDOM(innerHtml);
+      spinner.text = 'Cleaning up HTML';
       const document = dom.window.document;
       const elements = document.querySelectorAll("*");
       elements.forEach(element => {
@@ -68,8 +74,9 @@ async function extractHtml() {
 }
 
 async function main() {
-  const propertyInfoHtml = await extractHtml();
-  run(propertyInfoHtml);
+  const spinner = ora('Accessing Web Page').start();
+  const propertyInfoHtml = await extractHtml(spinner);
+  run(propertyInfoHtml, spinner);
 }
 main();
 
