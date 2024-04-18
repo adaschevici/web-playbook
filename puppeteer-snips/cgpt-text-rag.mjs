@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import puppeteer from 'puppeteer-extra';
 import StealthPlugin from 'puppeteer-extra-plugin-stealth';
 import crypto from 'crypto';
+import { JSDOM } from 'jsdom';
 
 dotenv.config();
 const openai = new OpenAI();
@@ -20,7 +21,12 @@ async function run(propertyInfoHtml) {
       {
         role: "user",
         content: [
-          { type: "text", text: "Can you extract the property prices out of this html and send me the results?" },
+          {
+            type: "text",
+            text: `Can you extract the property prices out of this
+            html and send me the results? The text is in italian so
+            you should translate that. Can you send me the output as JSON?`
+          },
           {
             type: "text",
             text: propertyInfoHtml,
@@ -43,11 +49,27 @@ async function extractHtml() {
       const element = await page.$(".in-listAndMapContent__list");
       const innerHtml = await page.evaluate(element => element.innerHTML, element);
       console.log(innerHtml.length);
+      browser.close();
+      const dom = new JSDOM(innerHtml);
+      const document = dom.window.document;
+      const elements = document.querySelectorAll("*");
+      elements.forEach(element => {
+        Array.from(element.attributes).forEach(attribute => {
+            element.removeAttribute(attribute.name);
+          }
+        );
+      });
+      const cleanedHtml = dom.serialize();
+      console.log(cleanedHtml.length);
+      return cleanedHtml;
 
     }
 
-    browser.close();
 }
 
-extractHtml();
+async function main() {
+  const propertyInfoHtml = await extractHtml();
+  run(propertyInfoHtml);
+}
+main();
 
