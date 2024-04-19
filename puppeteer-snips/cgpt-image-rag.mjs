@@ -10,7 +10,7 @@ dotenv.config();
 const openai = new OpenAI();
 
 const urls = [
-  "https://www.immobiliare.it/vendita-case/verona/?criterio=rilevanza&prezzoMassimo=120000"
+  "https://www.homegate.ch/rent/real-estate/zip-8005/matching-list?ac=2.5"
 ]
 
 puppeteer.use(StealthPlugin())
@@ -50,21 +50,22 @@ async function grabSelectorScreenshot(spinner) {
     await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3');
     for (const url of urls) {
       const hashed = crypto.createHash('sha256').update(url).digest('hex');
-      await page.goto(url);
-      spinner.text = 'Getting element from page';
-      const element = await page.$(".in-listAndMapContent__list");
+      await page.goto(url, {waitUntil: 'networkidle0'});
+      // spinner.text = 'Getting element from page';
+      const element = await page.$(".ResultListPage_resultListPage_iq_V2");
       const designatedPath = `./screenshots/${hashed}-list-ss.png`;
       await element.screenshot({"path": designatedPath, "type": "png"});
+      browser.close();
       return designatedPath;
 
     }
 
 }
 
-const spinner = ora('Accessing Web Page').start();
 async function main() {
+  const spinner = ora('Accessing Web Page').start();
   const propertyInfoHtml = await extractHtml(spinner);
   run(propertyInfoHtml, spinner);
 }
 
-
+grabSelectorScreenshot()
