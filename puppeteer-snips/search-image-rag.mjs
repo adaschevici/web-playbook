@@ -75,7 +75,7 @@ async function grabSelectorScreenshot() {
       // spinner.text = 'Getting element from page';
       const element = await page.$("div#document1 div.eli-container");
       const designatedPathPng = `./screenshots/${hashed}-list-ss.png`;
-      await element.screenshot({"path": designatedPathPng, fullPage: true, "type": "png"});
+      await element.screenshot({"path": designatedPathPng, "type": "png"});
       browser.close();
       const dataPng = await readFile(designatedPathPng);
       const b64imgPng = Buffer.from(dataPng).toString('base64');
@@ -86,9 +86,8 @@ async function grabSelectorScreenshot() {
 }
 
 async function main() {
-  const propertyInfoImages = await grabSelectorScreenshot();
-  console.log(propertyInfoImages.b64imgPng.length);
-  console.log(propertyInfoImages.b64imgJpg.length);
+  const propertyInfoImage = await grabSelectorScreenshot();
+  console.log(propertyInfoImage.length);
   // run(propertyInfoImages.b64imgPng, 'png');
   // run(propertyInfoImages.b64imgJpg, 'jpeg');
 }
