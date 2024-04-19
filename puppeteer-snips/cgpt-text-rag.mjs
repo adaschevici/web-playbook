@@ -40,6 +40,7 @@ async function run(propertyInfoHtml, spinner) {
   });
   spinner.succeed('Received response from OpenAI');
   console.log(response.choices[0]);
+  console.log(response.usage);
 }
 
 async function extractHtml(spinner) {
