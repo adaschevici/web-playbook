@@ -5,9 +5,12 @@ import StealthPlugin from 'puppeteer-extra-plugin-stealth';
 import crypto from 'crypto';
 import { JSDOM } from 'jsdom';
 import ora from 'ora';
+import fs from 'fs';
+import util from 'util';
 
 dotenv.config();
 const openai = new OpenAI();
+const readFile = util.promisify(fs.readFile);
 
 const urls = [
   "https://www.homegate.ch/rent/real-estate/zip-8005/matching-list?ac=2.5"
@@ -27,12 +30,13 @@ async function run(propertyInfoImage, spinner) {
           {
             type: "text",
             text: `Can you extract the property prices out of this
-            html and send me the results? The text is in italian so
-            you should translate that. Can you send me the output as JSON?`
+            image and send me the results? Can you send me the output as JSON?`
           },
           {
-            type: "text",
-            text: propertyInfoHtml,
+            type: "image_url",
+            image_url: {
+              url: `data:image/png;base64,${propertyInfoImage}`,
+            }
           },
         ],
       },
@@ -68,12 +72,14 @@ async function grabSelectorScreenshot(spinner) {
           }, 500);
         });
       });
-      // spinner.text = 'Getting element from page';
+      spinner.text = 'Getting element from page';
       const element = await page.$(".ResultListPage_resultListPage_iq_V2");
       const designatedPath = `./screenshots/${hashed}-list-ss.png`;
       await element.screenshot({"path": designatedPath, "type": "png"});
       browser.close();
-      return designatedPath;
+      const data = await readFile(designatedPath);
+      const b64img = Buffer.from(data).toString('base64');
+      return b64img;
 
     }
 
@@ -81,8 +87,8 @@ async function grabSelectorScreenshot(spinner) {
 
 async function main() {
   const spinner = ora('Accessing Web Page').start();
-  const propertyInfoHtml = await extractHtml(spinner);
+  const propertyInfoHtml = await grabSelectorScreenshot(spinner);
   run(propertyInfoHtml, spinner);
 }
 
-grabSelectorScreenshot()
+main();
