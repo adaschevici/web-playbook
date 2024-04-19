@@ -18,9 +18,9 @@ const urls = [
 
 puppeteer.use(StealthPlugin())
 
-async function run(propertyInfoImage, spinner) {
+async function run(propertyInfoImage, imageType) {
 
-  spinner.text = 'Sending HTML to OpenAI';
+  // spinner.text = 'Sending HTML to OpenAI';
   const response = await openai.chat.completions.create({
     model: "gpt-4-turbo",
     messages: [
@@ -35,19 +35,19 @@ async function run(propertyInfoImage, spinner) {
           {
             type: "image_url",
             image_url: {
-              url: `data:image/png;base64,${propertyInfoImage}`,
+              url: `data:image/${imageType};base64,${propertyInfoImage}`,
             }
           },
         ],
       },
     ],
   });
-  spinner.succeed('Received response from OpenAI');
-  console.log(response.choices[0]);
+  // spinner.succeed('Received response from OpenAI');
+  // console.log(response.choices[0]);
   console.log(response.usage);
 }
 
-async function grabSelectorScreenshot(spinner) {
+async function grabSelectorScreenshot() {
   // usual browser startup:
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
@@ -72,23 +72,29 @@ async function grabSelectorScreenshot(spinner) {
           }, 500);
         });
       });
-      spinner.text = 'Getting element from page';
+      // spinner.text = 'Getting element from page';
       const element = await page.$(".ResultListPage_resultListPage_iq_V2");
-      const designatedPath = `./screenshots/${hashed}-list-ss.png`;
-      await element.screenshot({"path": designatedPath, "type": "png"});
+      const designatedPathPng = `./screenshots/${hashed}-list-ss.png`;
+      const designatedPathJpg = `./screenshots/${hashed}-list-ss.jpg`;
+      await element.screenshot({"path": designatedPathPng, "type": "png"});
+      await element.screenshot({"path": designatedPathJpg, "type": "jpeg"});
       browser.close();
-      const data = await readFile(designatedPath);
-      const b64img = Buffer.from(data).toString('base64');
-      return b64img;
+      const dataJpg = await readFile(designatedPathJpg);
+      const dataPng = await readFile(designatedPathPng);
+      const b64imgPng = Buffer.from(dataPng).toString('base64');
+      const b64imgJpg = Buffer.from(dataJpg).toString('base64');
+      return {b64imgPng, b64imgJpg};
 
     }
 
 }
 
 async function main() {
-  const spinner = ora('Accessing Web Page').start();
-  const propertyInfoHtml = await grabSelectorScreenshot(spinner);
-  run(propertyInfoHtml, spinner);
+  const propertyInfoImages = await grabSelectorScreenshot();
+  console.log(propertyInfoImages.b64imgPng.length);
+  console.log(propertyInfoImages.b64imgJpg.length);
+  run(propertyInfoImages.b64imgPng, 'png');
+  run(propertyInfoImages.b64imgJpg, 'jpeg');
 }
 
 main();
