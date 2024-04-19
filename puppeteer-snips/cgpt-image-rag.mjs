@@ -51,6 +51,23 @@ async function grabSelectorScreenshot(spinner) {
     for (const url of urls) {
       const hashed = crypto.createHash('sha256').update(url).digest('hex');
       await page.goto(url, {waitUntil: 'networkidle0'});
+      // the following code will scroll to the bottom of the page
+      await page.evaluate(async () => {
+        await new Promise((resolve, reject) => {
+          var totalHeight = 0;
+          var distance = 300; // should be less than or equal to window.innerHeight
+          var timer = setInterval(() => {
+            var scrollHeight = document.body.scrollHeight;
+            window.scrollBy(0, distance);
+            totalHeight += distance;
+
+            if(totalHeight >= scrollHeight){
+              clearInterval(timer);
+              resolve();
+            }
+          }, 500);
+        });
+      });
       // spinner.text = 'Getting element from page';
       const element = await page.$(".ResultListPage_resultListPage_iq_V2");
       const designatedPath = `./screenshots/${hashed}-list-ss.png`;
