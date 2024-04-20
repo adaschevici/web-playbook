@@ -7,10 +7,12 @@ import { JSDOM } from 'jsdom';
 import ora from 'ora';
 import fs from 'fs';
 import util from 'util';
+import fullPageScreenshot from 'puppeteer-full-page-screenshot';
 
 dotenv.config();
 const openai = new OpenAI();
 const readFile = util.promisify(fs.readFile);
+
 
 const urls = [
   "https://eur-lex.europa.eu/eli/reg/2022/2554/oj"
@@ -51,6 +53,7 @@ async function grabSelectorScreenshot() {
   // usual browser startup:
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
+    await page.setViewport({ width: 1000, height: 10000, deviceScaleFactor: 0 });
     await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3');
     for (const url of urls) {
       const hashed = crypto.createHash('sha256').update(url).digest('hex');
