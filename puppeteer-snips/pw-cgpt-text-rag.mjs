@@ -74,8 +74,10 @@ async function extractHtml() {
 
 async function main() {
   const propertyInfoHtml = await extractHtml();
+  console.log(propertyInfoHtml);
   run(propertyInfoHtml);
 }
-extractHtml();
+
+main();
 
 
