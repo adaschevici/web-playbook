@@ -31,6 +31,9 @@ const chunkBy = (n) => number => {
 
 const chunkBy4k = chunkBy(4000);
 
+function sleep(milliseconds) {
+    return new Promise(resolve => setTimeout(resolve, milliseconds));
+}
 async function grabSelectorScreenshot() {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
@@ -39,27 +42,28 @@ async function grabSelectorScreenshot() {
       const hashed = crypto.createHash('sha256').update(url).digest('hex');
       await page.goto(url, {waitUntil: 'networkidle0'});
       const element = await page.$("div#document1 div.eli-container");
-      const {_, height} = await element.boundingBox();
-      console.log(height);
-      console.log(chunkBy4k(height));
-      // console.log(width, height);
-      // const designatedPathPng = `./screenshots/${hashed}-merged-ss.png`;
-      // const heights = chunkBy4k(height);
-      // const chunks = heights.map((h, i) => {
-      //   return element.screenshot({
-      //     clip: {
-      //       x: 0,
-      //       y: h.start,
-      //       height: h.height,
-      //       width,
-      //     },
-      //     path: `./screenshots/${hashed}-${i}-ss.png`
-      //   })
-      // });
-      // const filesResolved = await Promise.all(chunks)
-      // const mergedImage = await mergeImg(filesResolved, {direction: true});
-      // const _ = mergedImage.write(designatedPathPng);
-      // browser.close();
+      const {width, height} = await element.boundingBox();
+      const designatedPathPng = `./screenshots/${hashed}-merged-ss.png`;
+      const heights = chunkBy4k(height);
+      const chunks = heights.map((h, i) => {
+        return element.screenshot({
+          clip: {
+            x: 0,
+            y: h.start,
+            height: h.height,
+            width,
+          },
+          path: `./screenshots/${hashed}-${i}-ss.png`
+        })
+      });
+      const filesResolved = await Promise.all(chunks)
+      const mergedImage = await mergeImg(filesResolved, {direction: true});
+      mergedImage.write(designatedPathPng, async () => {
+        browser.close();
+        const dataPng = await readFile(designatedPathPng);
+        const b64imgPng = Buffer.from(dataPng).toString('base64');
+        return b64imgPng;
+      });
       //  .then((chunks) => mergeImg(chunks, {direction: true}))
       //  .then((final) => final.write(designatedPathPng, () => browser.close()))
       //  .catch((error) => {
@@ -67,9 +71,6 @@ async function grabSelectorScreenshot() {
       //    browser.close();
       //  });
        
-      // const dataPng = await readFile(designatedPathPng);
-      // const b64imgPng = Buffer.from(dataPng).toString('base64');
-      // return b64imgPng;
     }
 }
 
