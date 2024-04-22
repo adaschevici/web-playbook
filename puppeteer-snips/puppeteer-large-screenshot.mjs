@@ -16,6 +16,20 @@ const urls = [
 
 puppeteer.use(StealthPlugin())
 
+const chunkBy = (n) => number => {
+  let chunks = new Array(Math.floor(number / n)).fill(n);
+  chunks = chunks.map((c, i) => {return {height: c, start: i * c}});
+
+  const remainder = number - chunks[chunks.length - 1].start - chunks[chunks.length - 1].height;
+  if (remainder > 0) {
+    chunks.push({height: remainder, start: chunks[chunks.length - 1].start + chunks[chunks.length - 1].height});
+  }
+
+  console.log('CHUNKS = ', chunks);
+  return chunks;
+};
+
+const chunkBy4k = chunkBy(4000);
 
 async function grabSelectorScreenshot() {
     const browser = await puppeteer.launch();
@@ -25,45 +39,37 @@ async function grabSelectorScreenshot() {
       const hashed = crypto.createHash('sha256').update(url).digest('hex');
       await page.goto(url, {waitUntil: 'networkidle0'});
       const element = await page.$("div#document1 div.eli-container");
-      const {width, height} = await element.boundingBox();
-      console.log(width, height);
-      const designatedPathPng = `./screenshots/${hashed}-merged-ss.png`;
-      // await element.screenshot({"path": designatedPathPng, "type": "png"});
-      // await Promise.all([
-      //   element.screenshot({
+      const {_, height} = await element.boundingBox();
+      console.log(height);
+      console.log(chunkBy4k(height));
+      // console.log(width, height);
+      // const designatedPathPng = `./screenshots/${hashed}-merged-ss.png`;
+      // const heights = chunkBy4k(height);
+      // const chunks = heights.map((h, i) => {
+      //   return element.screenshot({
       //     clip: {
       //       x: 0,
-      //       y: 0,
-      //       height: Math.floor(height / 75),
+      //       y: h.start,
+      //       height: h.height,
       //       width,
       //     },
-      //   }),
-      //   element.screenshot({
-      //     clip: {
-      //       x: Math.floor(height / 75) * 1,
-      //       y: 0,
-      //       height: Math.floor(height / 75),
-      //       width,
-      //     },
+      //     path: `./screenshots/${hashed}-${i}-ss.png`
       //   })
-      // ])
-      const chunks = Array.from({length: 35}, (_, i) => {
-        return element.screenshot({
-          clip: {
-            x: 0,
-            y: i * Math.floor(height / 35),
-            height: Math.floor(height / 35),
-            width,
-          },
-          path: `./screenshots/${hashed}-${i}-ss.png`
-        })
-      });
-      await Promise.all(chunks)
-       .then((chunks) => mergeImg(chunks))
-       .then((final) => final.write(designatedPathPng, () => browser.close()));
-      const dataPng = await readFile(designatedPathPng);
-      const b64imgPng = Buffer.from(dataPng).toString('base64');
-      return b64imgPng;
+      // });
+      // const filesResolved = await Promise.all(chunks)
+      // const mergedImage = await mergeImg(filesResolved, {direction: true});
+      // const _ = mergedImage.write(designatedPathPng);
+      // browser.close();
+      //  .then((chunks) => mergeImg(chunks, {direction: true}))
+      //  .then((final) => final.write(designatedPathPng, () => browser.close()))
+      //  .catch((error) => {
+      //    console.error(error);
+      //    browser.close();
+      //  });
+       
+      // const dataPng = await readFile(designatedPathPng);
+      // const b64imgPng = Buffer.from(dataPng).toString('base64');
+      // return b64imgPng;
     }
 }
 
