@@ -6,6 +6,7 @@ import fs from 'node:fs/promises';
 import { readFile, readdir } from 'node:fs/promises';
 import path from 'node:path';
 import mergeImg from 'merge-img';
+import util from 'util';
 
 dotenv.config();
 // const readFile = util.promisify(fs.readFile);
@@ -71,6 +72,7 @@ async function grabSelectorScreenshot() {
       });
       const filesResolved = await Promise.all(chunks)
       const mergedImage = await mergeImg(filesResolved, {direction: true});
+      
       mergedImage.write(designatedPathPng, async () => {
         browser.close();
         const dataPng = await readFile(designatedPathPng);
@@ -78,20 +80,14 @@ async function grabSelectorScreenshot() {
         await deleteFilesMatchingPattern('./screenshots', new RegExp(`^${hashed}-\\d+-ss\\.png$`));
         return b64imgPng;
       });
-      //  .then((chunks) => mergeImg(chunks, {direction: true}))
-      //  .then((final) => final.write(designatedPathPng, () => browser.close()))
-      //  .catch((error) => {
-      //    console.error(error);
-      //    browser.close();
-      //  });
        
     }
 }
 
 async function main() {
   await grabSelectorScreenshot();
-  // const propertyInfoImage = await grabSelectorScreenshot();
-  // console.log(propertyInfoImage.length);
+  const propertyInfoImage = await grabSelectorScreenshot();
+  console.log(propertyInfoImage.length);
 }
 
 main();
