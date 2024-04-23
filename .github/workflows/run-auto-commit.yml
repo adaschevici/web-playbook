@@ -17,8 +17,6 @@ jobs:
         echo "Adding a new line" >> file.txt  # Example change
 
     - name: Commit and push if there are changes
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
       run: |
         git config --global user.email "a.daschevici@gmail.com"
         git config --global user.name "Artur Daschevici"
