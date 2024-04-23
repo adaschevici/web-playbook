@@ -18,8 +18,8 @@ jobs:
 
     - name: Commit and push if there are changes
       run: |
-        git config --global user.email "a.daschevici@gmail.com"
-        git config --global user.name "Artur Daschevici"
+        git config --global user.email "bot-action@github.com"
+        git config --global user.name "Bot Action"
         git add .
         git commit -m "Automated commit from GitHub Action" || echo "No changes to commit"
         git push
