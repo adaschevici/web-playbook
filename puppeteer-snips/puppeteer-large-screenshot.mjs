@@ -2,12 +2,13 @@ import dotenv from "dotenv";
 import puppeteer from 'puppeteer-extra';
 import StealthPlugin from 'puppeteer-extra-plugin-stealth';
 import crypto from 'crypto';
-import fs from 'fs';
-import util from 'util';
+import fs from 'node:fs/promises';
+import { readFile, readdir } from 'node:fs/promises';
+import path from 'node:path';
 import mergeImg from 'merge-img';
 
 dotenv.config();
-const readFile = util.promisify(fs.readFile);
+// const readFile = util.promisify(fs.readFile);
 
 
 const urls = [
@@ -31,9 +32,21 @@ const chunkBy = (n) => number => {
 
 const chunkBy4k = chunkBy(4000);
 
-function sleep(milliseconds) {
-    return new Promise(resolve => setTimeout(resolve, milliseconds));
+async function deleteFilesMatchingPattern(dirPath, regex) {
+  try {
+    const files = await readdir(dirPath);  // Read all files in the directory
+    for (let file of files) {
+      if (regex.test(file)) {  // Check if the file matches the pattern
+        const filePath = path.join(dirPath, file);
+        await fs.unlink(filePath);  // Delete the file
+        console.log(`Deleted: ${filePath}`);
+      }
+    }
+  } catch (error) {
+      console.error('Error:', error);
+  }
 }
+
 async function grabSelectorScreenshot() {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
@@ -62,6 +75,7 @@ async function grabSelectorScreenshot() {
         browser.close();
         const dataPng = await readFile(designatedPathPng);
         const b64imgPng = Buffer.from(dataPng).toString('base64');
+        await deleteFilesMatchingPattern('./screenshots', new RegExp(`^${hashed}-\\d+-ss\\.png$`));
         return b64imgPng;
       });
       //  .then((chunks) => mergeImg(chunks, {direction: true}))
