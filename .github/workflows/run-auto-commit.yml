@@ -1,4 +1,4 @@
-name: Run Botcheck
+name: Run Auto commit test
 
 on: [workflow_dispatch] # Define when to run the workflow
 
@@ -8,29 +8,18 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2 # Checks-out your repository under $GITHUB_WORKSPACE
-
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
+      uses: actions/checkout@v3 # Checks-out your repository under $GITHUB_WORKSPACE
       with:
-        node-version: '21' # Specify the Node.js version
+        persist-credentials: true
 
-    - name: Install pnpm
-      run: npm install -g pnpm # Install pnpm package manager
+    - name: Make changes
+      run: |
+        echo "Adding a new line" >> file.txt  # Example change
 
-    - name: Install dependencies
-      working-directory: puppeteer-snips
-      run: pnpm install # Install the dependencies
-
-    - name: Run Puppet tests
-      working-directory: puppeteer-snips
-      run: node  botcheck.mjs # Run one puppteeer script
-
-    - name: Upload Screenshots as Artifacts
-      if: always() # Always run this step
-      uses: actions/upload-artifact@v2
-      with:
-        name: screenshots
-        path: puppeteer-snips/screenshots/
-
-
+    - name: Commit and push if there are changes
+      run: |
+        git config --global user.email "action@github.com"
+        git config --global user.name "GitHub Action"
+        git add .
+        git commit -m "Automated commit from GitHub Action" || echo "No changes to commit"
+        git push
