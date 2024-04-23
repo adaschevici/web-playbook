@@ -2,14 +2,13 @@ import dotenv from "dotenv";
 import puppeteer from 'puppeteer-extra';
 import StealthPlugin from 'puppeteer-extra-plugin-stealth';
 import crypto from 'crypto';
+import fsSync from 'fs';
 import fs from 'node:fs/promises';
 import { readFile, readdir } from 'node:fs/promises';
 import path from 'node:path';
 import mergeImg from 'merge-img';
-import util from 'util';
 
 dotenv.config();
-// const readFile = util.promisify(fs.readFile);
 
 
 const urls = [
@@ -48,6 +47,26 @@ async function deleteFilesMatchingPattern(dirPath, regex) {
   }
 }
 
+async function writeAsync(filePath, buffer, mime = 'image/png') {
+  buffer.getBuffer(mime, (err, buffer)  => {
+    if (err) {
+      reject(err);
+    }
+    const stream = fsSync.createWriteStream(filePath);
+    return new Promise((resolve, reject) => {
+      stream.on("open", () => {
+        stream.write(buffer);
+        stream.end();
+      }).on("error", (err) => {
+        reject(err);
+      }).on("finish", () => {
+        resolve();
+      });
+    });
+    
+  });
+}
+
 async function grabSelectorScreenshot() {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
@@ -73,19 +92,17 @@ async function grabSelectorScreenshot() {
       const filesResolved = await Promise.all(chunks)
       const mergedImage = await mergeImg(filesResolved, {direction: true});
       
-      mergedImage.write(designatedPathPng, async () => {
-        browser.close();
-        const dataPng = await readFile(designatedPathPng);
-        const b64imgPng = Buffer.from(dataPng).toString('base64');
-        await deleteFilesMatchingPattern('./screenshots', new RegExp(`^${hashed}-\\d+-ss\\.png$`));
-        return b64imgPng;
-      });
-       
+      await writeAsync(designatedPathPng, mergedImage);
+
+      browser.close();
+      const dataPng = fsSync.readFileSync(designatedPathPng);
+      const b64imgPng = Buffer.from(dataPng).toString('base64');
+      await deleteFilesMatchingPattern('./screenshots', new RegExp(`^${hashed}-\\d+-ss\\.png$`));
+      return b64imgPng;
     }
 }
 
 async function main() {
-  await grabSelectorScreenshot();
   const propertyInfoImage = await grabSelectorScreenshot();
   console.log(propertyInfoImage.length);
 }
