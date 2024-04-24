@@ -17,6 +17,7 @@ const options = {
 
 const books = [
   { title: 'The Great Gatsby', author: 'F. Scott Fitzgerald' },
+  { title: 'The Da Vinci Code', author: 'Dan Brown' },
   { title: 'The Catcher in the Rye', author: 'J.D. Salinger' },
   { title: 'To Kill a Mockingbird', author: 'Harper Lee' },
   { title: 'The Grapes of Wrath', author: 'John Steinbeck' },
