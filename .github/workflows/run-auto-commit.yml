@@ -22,4 +22,4 @@ jobs:
         git config --global user.name "Bot Action"
         git add .
         git commit -m "Automated commit from GitHub Action" || echo "No changes to commit"
-        git push
+        git push git@github.com:adaschevici/searchreg-data.git
