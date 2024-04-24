@@ -2,7 +2,7 @@ import Fuse from 'fuse.js';
 
 const options = {
   includeScore: true,
-  keys: ['author', 'title']
+  keys: ['author', 'title'],
 }
 
 const books = [
@@ -18,6 +18,7 @@ const books = [
 ]
 
 const fuse = new Fuse(books, options);
+
 
 async function main(engine) {
   let results = engine.search({
