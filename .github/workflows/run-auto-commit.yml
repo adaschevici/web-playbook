@@ -19,7 +19,7 @@ jobs:
 
     - name: Commit and push if there are changes
       run: |
-        find . -mindepth 1 -not -name './data' -not -path './data/*' -not -path './git' -not -path './git/*' -exec rm -rf {} +
+        find . -mindepth 1 \! \( -path './data' -o -path './data/*' -o -path './.git/*' -o -path './.git' \) -exec rm -rf {} +
         git config --global user.email "bot-action@github.com"
         git config --global user.name "Bot Action"
         git add .
