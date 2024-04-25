@@ -19,11 +19,11 @@ jobs:
 
     - name: Commit and push if there are changes
       run: |
-        find . -mindepth 1 \! \( -path './data' -o -path './data/*' -o -path './.git/*' -o -path './.git' \) -exec rm -rf {} +
         git config --global user.email "bot-action@github.com"
         git config --global user.name "Bot Action"
-        git add .
         git commit -m "Automated commit from GitHub Action" || echo "No changes to commit"
         git config --unset-all http.https://github.com/.extraheader
-        git pull https://adaschevici:${{ secrets.BOT_COMMITER_TOKEN }}@github.com/adaschevici/searchreg-data.git
+        git pull --rebase https://adaschevici:${{ secrets.BOT_COMMITER_TOKEN }}@github.com/adaschevici/searchreg-data.git
+        find . -mindepth 1 \! \( -path './data' -o -path './data/*' -o -path './.git/*' -o -path './.git' \) -exec rm -rf {} +
+        git add .
         git push https://adaschevici:${{ secrets.BOT_COMMITER_TOKEN }}@github.com/adaschevici/searchreg-data.git
