@@ -12,12 +12,19 @@ jobs:
       with:
         persist-credentials: true
 
+    - name: Create new directory
+      run: |
+        mkdir -p test
+
     - name: Make changes
+      working-directory: test
       run: |
         echo "Adding a new line" >> file.txt  # Example change
 
     - name: Commit and push if there are changes
+      working-directory: test
       run: |
+        git init
         git config --global user.email "bot-action@github.com"
         git config --global user.name "Bot Action"
         git add .
