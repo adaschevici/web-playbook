@@ -25,5 +25,5 @@ jobs:
         git add .
         git commit -m "Automated commit from GitHub Action" || echo "No changes to commit"
         git config --unset-all http.https://github.com/.extraheader
-        # git pull --rebase https://adaschevici:${{ secrets.BOT_COMMITER_TOKEN }}@github.com/adaschevici/searchreg-data.git
+        git pull https://adaschevici:${{ secrets.BOT_COMMITER_TOKEN }}@github.com/adaschevici/searchreg-data.git
         git push https://adaschevici:${{ secrets.BOT_COMMITER_TOKEN }}@github.com/adaschevici/searchreg-data.git
