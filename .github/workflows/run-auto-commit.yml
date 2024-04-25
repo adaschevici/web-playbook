@@ -25,7 +25,7 @@ jobs:
         git add .
         git commit -m "Automated commit before rebasing" || echo "No changes to commit"
         git pull --rebase https://adaschevici:${{ secrets.BOT_COMMITER_TOKEN }}@github.com/adaschevici/searchreg-data.git
-        find . -mindepth 1 \! \( -path './data' -o -path './data/*' -o -path './.git/*' -o -path './.git' \) -exec rm -rf {} +
+        find . -mindepth 1 \! \( -path './data' -o -path './data/*' -o -path './.git/*' -o -path './.git' -o -path './LICENSE' -o -path './README.md' \) -exec rm -rf {} +
         git add .
         git commit -m "Automated commit from GitHub Action" || echo "No changes to commit"
         git push https://adaschevici:${{ secrets.BOT_COMMITER_TOKEN }}@github.com/adaschevici/searchreg-data.git
