@@ -12,24 +12,17 @@ jobs:
       with:
         persist-credentials: true
 
-    - name: Create new directory
-      run: |
-        mkdir -p test
-
     - name: Make changes
-      working-directory: test
       run: |
-        echo "Adding a new line" >> file.txt  # Example change
+        mkdir -p data
+        echo "Adding a new line" >> ./data/file.txt  # Example change
 
     - name: Commit and push if there are changes
-      working-directory: test
       run: |
-        git config --global init.defaultBranch main
-        git init
+        find . -mindepth 1 -not -path './data' -not -path './data/*' -exec rm -rf {} +
         git config --global user.email "bot-action@github.com"
         git config --global user.name "Bot Action"
         git add .
-        # git branch -m main
         git commit -m "Automated commit from GitHub Action" || echo "No changes to commit"
         git config --unset-all http.https://github.com/.extraheader
         git pull --rebase https://adaschevici:${{ secrets.BOT_COMMITER_TOKEN }}@github.com/adaschevici/searchreg-data.git
