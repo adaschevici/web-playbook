@@ -22,6 +22,8 @@ jobs:
         git config --global user.email "bot-action@github.com"
         git config --global user.name "Bot Action"
         git config --unset-all http.https://github.com/.extraheader
+        git add .
+        git commit -m "Automated commit before rebasing" || echo "No changes to commit"
         git pull --rebase https://adaschevici:${{ secrets.BOT_COMMITER_TOKEN }}@github.com/adaschevici/searchreg-data.git
         find . -mindepth 1 \! \( -path './data' -o -path './data/*' -o -path './.git/*' -o -path './.git' \) -exec rm -rf {} +
         git add .
