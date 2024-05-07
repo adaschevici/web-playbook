@@ -3,7 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import type { Post } from '../types/interface';
 
 export async function getStaticPaths() {
-  const allPosts: any = await Astro.glob('../posts/*{md,mdx}');
+  const allPosts: any = await Astro.glob('../posts/**/*{md,mdx}');
   const posts: Post[] = allPosts.filter(
     (post: Post) => !post.frontmatter.draft && post.frontmatter.slug,
   );

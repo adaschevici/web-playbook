@@ -1,8 +1,10 @@
 ---
 import Index from '../components/Index.svelte';
 import Layout from '../layouts/Layout.astro';
-const allPosts = await Astro.glob('../posts/*.{md,mdx}');
-const posts = allPosts.filter((post) => !post.frontmatter.draft && post.frontmatter.slug);
+const allPosts = await Astro.glob('../posts/**/*.{md,mdx}');
+const posts = allPosts.filter((post) => {
+  return !post.frontmatter.draft && post.frontmatter.slug
+});
 ---
 
 <Layout title="Regulatory Search">
