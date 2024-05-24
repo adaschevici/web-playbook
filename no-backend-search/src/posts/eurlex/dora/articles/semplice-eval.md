@@ -6,8 +6,6 @@ content-url: https://eur-lex.europa.eu/eli/reg/2022/2554/oj
 slug: eurlex-dora-article-64
 description: Entry into force and application
 ---
-####  
-## Article 64
 
 <div>
   <p>
@@ -18,6 +16,8 @@ description: Entry into force and application
   <p>It shall apply from 17&nbsp;January 2025.</p>
 </div>
 
+
+<div style="height: 6rem;"></div>
 
 __Original Source:__
 [EUR-Lex](https://eur-lex.europa.eu/eli/reg/2022/2554/oj)
