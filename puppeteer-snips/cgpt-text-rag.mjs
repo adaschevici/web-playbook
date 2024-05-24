@@ -53,7 +53,7 @@ async function extractHtml(spinner) {
     const hashed = crypto.createHash("sha256").update(url).digest("hex");
     await page.goto(url);
     spinner.text = "Getting element from page";
-    const element = await page.$(".in-listAndMapContent__list");
+    const element = await page.$(".in-realEstateResults");
     const innerHtml = await page.evaluate(
       (element) => element.innerHTML,
       element,

@@ -13,7 +13,7 @@ const openai = new OpenAI();
 const readFile = util.promisify(fs.readFile);
 
 const urls = [
-  "https://www.homegate.ch/rent/real-estate/zip-8005/matching-list?ac=2.5",
+  "https://www.homegate.ch/rent/real-estate/zip-8002/matching-list?ac=2.5",
 ];
 
 puppeteer.use(StealthPlugin());
@@ -42,7 +42,7 @@ async function run(propertyInfoImage, imageType) {
     ],
   });
   // spinner.succeed('Received response from OpenAI');
-  // console.log(response.choices[0]);
+  console.log(response.choices[0]);
   console.log(response.usage);
 }
 
