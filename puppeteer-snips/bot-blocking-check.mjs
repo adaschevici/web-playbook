@@ -29,10 +29,10 @@ puppeteer
     const button = await frame.$(
       "div#challenge-stage label.cb-lb input[type='checkbox']",
     );
-    await sleep(5000);
-    await button.click();
-    await sleep(25000);
+    await sleep(1000);
     console.log(button);
+    await button.click();
+    await sleep(45000);
     // await button.click();
     // console.log(await button.evaluate((node) => node.textContent));
     await page.screenshot({
